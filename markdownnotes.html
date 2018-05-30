@@ -7,7 +7,8 @@
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/marked.js"></script>
     <script src="ace/ace.js"></script>
-    <link href="markdown.css" rel="stylesheet" />
+    <link href="css/markdown.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <title>markdown编辑器</title>
     <style type="text/css">
         * {
@@ -26,20 +27,20 @@
         }
 
         #toolbar {
-            height: 50px;
+          display: flex;
+            flex-wrap: wrap;
             background-color: #444;
             width: 100%;
             color: #fff;
-            line-height: 50px;
+            align-content: flex-start
+            
         }
 
         #container {
             overflow: auto;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            top: 50px;
+            position: relative;
+            height: 100%;
+            width: 100%;
         }
 
         #editor-column,
@@ -76,10 +77,11 @@
             }
         </script>
     <div id='toolbar'>
-           <button onclick="insertText('**?**')">加粗</button>
-           <button onclick="insertText('_?_')">斜体</button>
-           <button onclick="insertText('>')">引用</button>
+           <button class="btn btn-default" onclick="insertText('**?**')">加粗</button>
+           <button class="btn btn-default" onclick="insertText('_?_')">斜体</button>
+           <button class="btn btn-default" onclick="insertText('>')">引用</button>
            
+
            设置:
            <select id="theme" size="1">
                <optgroup label="Bright">
