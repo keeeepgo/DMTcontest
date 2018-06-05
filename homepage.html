@@ -12,7 +12,7 @@
     <script src="js/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="layui/layui.js"></script>
 
-    <link rel="stylesheet" href="iconfont/material-icons.css">
+    <link rel=stylesheet href="iconfont/material-icons.css">
     <link rel="stylesheet" type="text/css" href="css/waitlist.css">
     <link rel="stylesheet" type="text/css" href="css/taglist.css">
     <link rel="stylesheet" type="text/css" href="css/tagcloud.css">
@@ -20,16 +20,15 @@
     <script type="text/javascript" src="js/vue.js"></script>
     <script type="text/javascript" src="js/echarts.js"></script>
     <script src="js/macarons.js"></script>
-
+    
     <style type="text/css">
-        .sidemovein {
+        .sidemovein{
             -webkit-transform: translateX(1200px) rotateY(-45deg);
             transform: translateX(1200px) rotateY(-45deg);
         }
-
-        .sidemoveout {
+        .sidemoveout{
             -webkit-transform: rotateY(0deg);
-            transform: rotateY(0deg);
+            transform:  rotateY(0deg);
         }
     </style>
 
@@ -39,7 +38,6 @@
     <nav class="menu-activea">
         <h1>Menu</h1>
         <ul>
-            <li></li>
             <li>
                 <b>资讯</b>
             </li>
@@ -47,19 +45,18 @@
                 <b>笔记</b>
             </li>
             <li>
-                <b>编辑</b>
+                <b>MarkDown</b>
             </li>
             <li>
                 <b>设置</b>
             </li>
-
         </ul>
     </nav>
 
     <main class="someMain">
 
-        <section id="newspage">
-
+        <section  id="newspage">
+            
             <div class="row">
                 <div class="aside col-md-8 col-md-offset-2">
                     <div style="height: 400px;width:100%;background-image:url('http://image.thepaper.cn/www/image/7/831/66.jpg');background-repeat:no-repeat;background-attachment:fixed;background-position:center;background-position: 40% 40%; background-size:100%;"></div>
@@ -124,7 +121,7 @@
                         <p>冠一公司2009年成立于上海，先后为ARJ21、C919、MA60/600、MA700、AG600、Z15等国产各重要民机型号提供产品或技术服务。冠一通飞于2014年启动GA20型号设计，随后将该型号落户江西南昌，并于2017年4月正式设立江西冠一通用飞机有限公司，作为GA20机型研制生产的企业主体。</div>
                     <div class="go_to_topic"> </div>
                 </div>
-                <div id="controls" class="col-md-offset-10 col-md-2 right">
+                <div id="controls" class="col-md-2 right">
                     <a href="#" id="small">A</a>
                     <a href="#" id="medium" class="selected">A</a>
                     <a href="#" id="large">A</a>
@@ -143,11 +140,9 @@
         <script src="js/news.js"></script>
         <script src="js/changeFront.js"></script>
     </main>
-    <a id="sidebutton" style="position: fixed;top:0;right: 10%;width: 2em;height: 2em;background-color: #353441; border: hidden;z-index: 1000;cursor: pointer;">
-        <i aria-hidden="true" class="material-icons">
-            arrow_forward
-        </i>
-    </a>
+        <a id="sidebutton" style="position: fixed;top:0;right: 10%;width: 2em;height: 2em;background-color: #353441; border: hidden;z-index: 1000;cursor: pointer;"><i aria-hidden="true" class="material-icons">
+                                 arrow_forward
+                                 </i></a>
 
 
     <div id="siderbar" class="container sidemovein" style="transition: -webkit-transform 1000ms ease-out;transition: transform 1000ms ease-out;transition: transform 1000ms ease-out, -webkit-transform 1000ms ease-out;position: fixed;right:0;width: 600px;height: 100%;overflow: scroll; ">
@@ -162,27 +157,27 @@
                     <!--wrapper-->
                     <div id="taglist">
                         <h1>
-                            个人标签列表
+                        个人标签列表
                         </h1>
                         <template v-if="tags.length">
                             <ul>
                                 <li stagger="5000" v-for="item in tags">
                                     <span class="date">
-                                        {{item.id}}
-                                    </span>
+                                 {{item.id}}
+                              </span>
                                     <span class="label">
-                                        {{item.label}}
-                                    </span>
+                                 {{item.label}}
+                              </span>
                                     <div class="actions">
                                         <button class="btn-picto" type="button" v-on:click="changeReadNow(item)">
                                             <i aria-hidden="true" class="material-icons">
-                                                看
-                                            </i>
+                                 看
+                                 </i>
                                         </button>
                                         <button aria-label="Delete" class="btn-picto" title="Delete" type="button" v-on:click="deleteItemFromList(item)">
                                             <i aria-hidden="true" class="material-icons">
-                                                delete
-                                            </i>
+                                 delete
+                                 </i>
                                         </button>
                                     </div>
                                 </li>
@@ -211,7 +206,7 @@
                 <div class="col-md-12" style="background-color: #dedef8;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
                     <div id="waitlist">
                         <h1>
-                            待看文章
+                        待看文章
                         </h1>
                         <div>
                             正在阅读的文章：{{ nowread_id }}
@@ -220,27 +215,26 @@
                             <ul>
                                 <li stagger="5000" v-bind:class="item.done ? 'done' : ''" v-for="item in todoByStatus">
                                     <span class="date">
-                                        {{item.date}} {{item.id}}
-                                    </span>
+                                 {{item.date}} {{item.id}}
+                              </span>
                                     <span class="label">
-                                        {{item.label}}
-                                    </span>
+                                 {{item.label}}
+                              </span>
                                     <div class="actions">
                                         <button class="btn-picto" type="button" v-on:click="changeReadNow(item)">
                                             <i aria-hidden="true" class="material-icons">
-                                                看
-                                            </i>
+                                 看
+                                 </i>
                                         </button>
-                                        <button class="btn-picto" type="button" v-bind:aria-label="item.done ? 'Undone' : 'Done'" v-bind:title="item.done ? 'Undone' : 'Done'"
-                                            v-on:click="markAsDoneOrUndone(item)">
+                                        <button class="btn-picto" type="button" v-bind:aria-label="item.done ? 'Undone' : 'Done'" v-bind:title="item.done ? 'Undone' : 'Done'" v-on:click="markAsDoneOrUndone(item)">
                                             <i aria-hidden="true" class="material-icons">
-                                                {{ item.done ? 'check_box' : 'check_box_outline_blank' }}
-                                            </i>
+                                 {{ item.done ? 'check_box' : 'check_box_outline_blank' }}
+                                 </i>
                                         </button>
                                         <button aria-label="Delete" class="btn-picto" title="Delete" type="button" v-on:click="deleteItemFromList(item)">
                                             <i aria-hidden="true" class="material-icons">
-                                                delete
-                                            </i>
+                                 delete
+                                 </i>
                                         </button>
                                     </div>
                                 </li>
@@ -276,20 +270,21 @@
         </div>
     </div>
 </body>
-<script type="text/javascript">
-    var showornot = false;
-    $("#sidebutton").click(function () {
-        if (showornot == false) {
-            $("#siderbar").removeClass('sidemovein');
-            $("#siderbar").addClass('sidemoveout');
-            showornot = true;
-        } else {
-            $("#siderbar").removeClass('sidemoveout');
+        <script type="text/javascript">
+        var showornot = false;
+        $("#sidebutton").click(function(){
+            if(showornot == false){
+                $("#siderbar").removeClass('sidemovein');
+                $("#siderbar").addClass('sidemoveout');
+                showornot = true;
+            }else{
+                $("#siderbar").removeClass('sidemoveout');
             $("#siderbar").addClass('sidemovein');
-            showornot = false;
-        }
-    });
-</script>
+                showornot = false;
+            }
+        });
+
+    </script>
 <script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 <script src="js/homepage.js"></script>
 <script src="js/news.js"></script>

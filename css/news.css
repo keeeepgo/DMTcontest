@@ -18,13 +18,12 @@
 }
 
 #controls {
-    position: absolute;
     float: right;
     padding: 2px;
     width: 30px;
     background: #333;
-
-    
+    position: fixed;
+    margin: 0 0 0 1200px;
     text-align: center;
     transition: .25s ease-out;
 }
