@@ -1,14 +1,14 @@
 /*3D标签云*/
 var tags = [
-    { id: 1498627266558, label: "小米" },
-    { id: 1498627266557, label: "Unity" },
-    { id: 1498627266558, label: "西甲" },
-    { id: 1498627266557, label: "NBA" },
-    { id: 1498627266558, label: "杜兰特" },
-    { id: 1498627266557, label: "卡卡" },
-    { id: 1498627266558, label: "科幻片" },
-    { id: 1498627266557, label: "周星驰" },
-    { id: 1498627266556, label: "独立游戏" }
+{ id: 1498627266558, label: "小米" },
+{ id: 1498627266557, label: "Unity" },
+{ id: 1498627266558, label: "西甲" },
+{ id: 1498627266557, label: "NBA" },
+{ id: 1498627266558, label: "杜兰特" },
+{ id: 1498627266557, label: "卡卡" },
+{ id: 1498627266558, label: "科幻片" },
+{ id: 1498627266557, label: "周星驰" },
+{ id: 1498627266556, label: "独立游戏" }
 ];
 
 function reloadTagCloud(tags) {
@@ -32,14 +32,14 @@ reloadTagCloud(tags);
 var tagshow = new Vue({
     el: '#taglist',
     data: {
-        newitem: '',
+        newtag: '',
         tags: tags,
     },
     methods: {
         addItem: function() {
             var today = new Date();
-            this.tags.push({ id: today.getTime(), label: this.newitem });
-            this.newitem = '';
+            this.tags.push({ id: today.getTime(), label: this.newtag });
+            this.newtag = '';
         },
         deleteItemFromList: function(item) {
             let index = this.tags.indexOf(item)

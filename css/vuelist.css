@@ -5,16 +5,15 @@
     }
 }
 
-#waitlist {
+.vuelist {
     margin: 5px;
     padding: 2vh 3vh 3vh;
-    width: 100%;
-    height: 100%;
-    background: #90AFC5;
+ 
+    background: #353441;
     color: #FFF;
 }
 
-#waitlist h1 {
+.vuelist h1 {
     /*text-align:center;*/
     font-weight: normal;
     font-size: 5vh;
@@ -22,7 +21,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, .3);
 }
 
-#waitlist .emptylist {
+.vuelist .emptylist {
     margin-top: 2.6vh;
     text-align: center;
     letter-spacing: .05em;
@@ -30,12 +29,12 @@
     opacity: 0.8;
 }
 
-#waitlist ul {
+.vuelist ul {
     margin-top: 2.6vh;
     list-style: none;
 }
 
-#waitlist li {
+.vuelist li {
     display: flex;
     flex-wrap: wrap;
     margin: 0 -3vh 4px;
@@ -45,32 +44,32 @@
     background: rgba(255, 255, 255, 0.1);
 }
 
-#waitlist .actions {
+.vuelist .actions {
     flex-shrink: 1;
     padding-left: 0.7em;
 }
 
-#waitlist .date{
+.vuelist .date{
     flex-shrink: 1;
     font-size: 2vh;
     padding-right: 1em;
 }
 
-#waitlist .label {
+.vuelist .label {
     flex-shrink: 1;
     position: relative;
     transition: opacity .2s linear;
 }
 
-#waitlist .description {
+.vuelist .description {
     width: 100%;
 }
 
-#waitlist .done .label {
+.vuelist .done .label {
     opacity: .6;
 }
 
-#waitlist .done .label:before {
+.vuelist .done .label:before {
     content: '';
     position: absolute;
     top: 50%;
@@ -82,7 +81,7 @@
     animation: strikeitem .3s ease-out 0s forwards;
 }
 
-#waitlist .btn-picto {
+.vuelist .btn-picto {
     border: none;
     background: none;
     -webkit-appearance: none;
