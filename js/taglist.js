@@ -32,14 +32,14 @@ reloadTagCloud(tags);
 var tagshow = new Vue({
     el: '#taglist',
     data: {
-        newtag: '',
+        newitem: '',
         tags: tags,
     },
     methods: {
         addItem: function() {
             var today = new Date();
-            this.tags.push({ id: today.getTime(), label: this.newtag });
-            this.newtag = '';
+            this.tags.push({ id: today.getTime(), label: this.newitem });
+            this.newitem = '';
         },
         deleteItemFromList: function(item) {
             let index = this.tags.indexOf(item)

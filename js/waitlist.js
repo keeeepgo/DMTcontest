@@ -31,6 +31,7 @@ Vue.component('togglebutton', {
 var waitlist = new Vue({
     el: '#waitlist',
     data: {
+        newitem: '',
         sortByStatus: false,
         todo: [
             { id: 1498627266558, label: "Learn VueJs", done: true, date: '2018/5/19' },
@@ -40,6 +41,11 @@ var waitlist = new Vue({
         nowread_id: nowread_id
     },
     methods: {
+        addItem: function() {
+            var today = new Date();
+            this.todo.push({ id: today.getTime(), label: this.newitem, done: false, date: today.toLocaleDateString() });
+            this.newitem = '';
+        },
         markAsDoneOrUndone: function(item) {
             item.done = !item.done;
         },
