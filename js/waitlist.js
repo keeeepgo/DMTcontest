@@ -1,4 +1,6 @@
-
+// 说明：JS时间Date格式化参数
+// 参数：格式化字符串如：'yyyy-MM-dd HH:mm:ss'
+// 结果：如2016-06-01 10:09:00
 var nowread_id = 1498627266558;
 
 Vue.component('togglebutton', {
