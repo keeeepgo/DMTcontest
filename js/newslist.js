@@ -4,12 +4,12 @@ var nowread_id = 1498627266558;
 Vue.component('togglebutton', {
     props: ['label', 'name'],
     template: `<div class="togglebutton-wrapper" v-bind:class="isactive ? 'togglebutton-checked' : ''">
-                  <label v-bind:for="name">
-                    <span class="togglebutton-label">{{ label }}</span>
-                    <span class="tooglebutton-box"></span>
-                  </label>
-                  <input v-bind:id="name" type="checkbox" v-bind:name="name" v-model="isactive" v-on:change="onToogle">
-              </div>`,
+    <label v-bind:for="name">
+    <span class="togglebutton-label">{{ label }}</span>
+    <span class="tooglebutton-box"></span>
+    </label>
+    <input v-bind:id="name" type="checkbox" v-bind:name="name" v-model="isactive" v-on:change="onToogle">
+    </div>`,
     model: {
         prop: 'checked',
         event: 'change'
@@ -26,14 +26,14 @@ Vue.component('togglebutton', {
     }
 });
 
-var waitlist = new Vue({
-    el: '#waitlist',
+var newslist = new Vue({
+    el: '#newslist',
     data: {
         sortByStatus: false,
         todo: [
-            { id: 1498627266558, label: "Learn VueJs", done: true, date: '2018/5/19' },
-            { id: 1498627266557, label: "Code a todo list", done: false, date: '2018/5/19' },
-            { id: 1498627266556, label: "Learn something else", done: false, date: '2018/5/19' }
+        { id: 1, label: "Learn VueJs", done: true},
+        { id: 2, label: "Code a todo list", done: false},
+        { id: 3, label: "Learn something else", done: false}
         ],
         nowread_id: nowread_id
     },
