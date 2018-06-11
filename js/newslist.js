@@ -29,11 +29,26 @@ Vue.component('togglebutton', {
 });
 
 
+function refreshNews(newsId){
+    var url_news = "http://localhost:8080/News?newsId="+newsId;
+    var xhr = new XMLHttpRequest();
+    var url = url_News;
+    xhr.open("GET", url, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
+            var str = "";
+            str = xhr.responseText;
+            newsContent = JSON.parse(str);
+            $("#news_title").val(newsContent['newsTitle']);
+            $("news_content").html(newsContent['newsContent']) ;
+        }
+    };
+    xhr.send();
+}
 
 var userId=1;
 var url_RecommendNewsList = "http://localhost:8080/RecommendNewsList?userId="+userId;
 var newslistdata = [{newsId : 1,newsTitle:"asdadas",done:false}];
-
 var newslist = new Vue({
     el: '#newslist',
     data: {
@@ -52,6 +67,8 @@ var newslist = new Vue({
             console.log(nowread_newsId);
             this.nowread_newsTitle = item.newsTitle;
             nowread_newsTitle = item.newsTitle;
+            //diaoyong函数
+            refreshNews(nowread_newsId);
         },
         movedonetoogle: function(active) {
             this.sortByStatus = active;
