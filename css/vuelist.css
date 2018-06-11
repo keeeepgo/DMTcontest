@@ -69,6 +69,10 @@
     opacity: .6;
 }
 
+#newslist .label{
+    cursor: pointer;
+}
+
 .vuelist .done .label:before {
     content: '';
     position: absolute;

@@ -18,8 +18,9 @@
 		<script type="text/javascript" src="js/vue.js"></script>
 		<script type="text/javascript" src="js/echarts.js"></script>
 		<script src="js/macarons.js"></script>
-		<style type="text/css">html, body {
-			height: 100%;
+		<style type="text/css">
+			html, body {
+				height: 100%;
 			}
 			* {
 				box-sizing: border-box;
@@ -62,7 +63,7 @@
 			}
 		</style>
 	</head>
-	
+	<body>
 	<body>
 		<nav class="menu-activea">
 			<h1>Menu</h1>
@@ -81,18 +82,17 @@
 				</li>
 			</ul>
 		</nav>
-		<main class="someMain">
+		<main id="Main">
 			<section id="newspage">
 				<div class="row">
 					<div class="col-md-3">
-						<div class="vuelist" id="newslist">
-							<h1>待看文章</h1>
-							<div>正在阅读的文章：{{ nowread_id }}</div>
+						<div class="vuelist" id="newslist" style="margin-top: 30%;">
+							<h1>资讯列表</h1>
+							<div>正在阅读的文章：{{ nowread_newsTitle }}</div>
 							<template v-if="todo.length">
 							<ul>
 								<li stagger="5000" v-bind:class="item.done ? 'done' : ''" v-for="item in todoByStatus">
-									<span class="date">{{item.date}}</span>
-									<span class="label"  v-bind:aria-label="item.done ? 'Undone' : 'Done'" v-bind:title="item.done ? 'Undone' : 'Done'" v-on:click="markAsDoneOrUndone(item);changeReadNow(item)">{{item.label}}</span>
+									<span class="label" v-bind:aria-label="item.done ? 'Undone' : 'Done'" v-bind:title="item.done ? 'Undone' : 'Done'" v-on:click="markAsDoneOrUndone(item);changeReadNow(item)">{{item.newsTitle}}</span>
 									<div class="actions">
 										<button class="btn-picto" type="button">
 										<i aria-hidden="true" class="material-icons">{{ item.done ? 'check_box' : 'check_box_outline_blank' }}</i></button>
@@ -172,17 +172,21 @@
 						<a href="#" id="medium" class="selected">A</a>
 						<a href="#" id="large">A</a>
 					</div>
+
+					<div style="position: fixed;top:30%;right: 4%;">
+						<svg id="process" width="100" height="100" viewbox="0 0 500 500"   >
+						    <circle cx="250" cy="250" r="150" stroke-width="50" stroke="#D1D3D7" fill="none"></circle>
+						    <circle id="circleprocess" cx="250" cy="250" r="150" stroke-width="50" stroke="#00A5E0" stroke-linecap='square' fill="none" transform="matrix(0,-1,1,0,0,500)" stroke-dasharray="0 10000"></circle>
+						</svg>
+						<button id="scrolltopbtn" style="border:1px ;background: transparent; position: absolute;top:30%;right: 30%;z-index: 10000;"><i aria-hidden="true" class="material-icons" style="font-size: 3em;color: #00A5E0">arrow_upward</i></button>
+					</div>
 				</div>
 			</section>
 		</main>
 		<a id="sidebutton" style="position: fixed;top:0;right: 5%;width: 2em;height: 2em;background-color: #353441; border: hidden;z-index: 1000;cursor: pointer;">
 			<i aria-hidden="true" class="material-icons">arrow_forward</i>
 		</a>
-		<svg width="50" height="50" viewbox="0 0 500 500" style="position: fixed;top:10%;right: 5%;" >
-		    <circle cx="250" cy="250" r="150" stroke-width="50" stroke="#D1D3D7" fill="none"></circle>
-		    <circle id="circleprocess" cx="250" cy="250" r="150" stroke-width="50" stroke="#00A5E0" stroke-linecap='square' fill="none" transform="matrix(0,-1,1,0,0,500)" stroke-dasharray="100 10000"></circle>
-		</svg>
- 
+
 		<div id="siderbar" class="container sidemovein" style="background: #353441;transition: -webkit-transform 300ms ease-out;transition: transform 300ms ease-out;transition: transform 300ms ease-out, -webkit-transform 300ms ease-out;position: fixed;right:0;width: 600px;height: 100%;overflow: scroll; ">
 			<div class="row">
 				<div class="col-md-12">
@@ -197,7 +201,7 @@
 						<template v-if="tags.length">
 						<ul>
 							<li stagger="5000" v-for="item in tags">
-								<span class="label">{{item.label}}</span>
+								<span class="label">{{item.tagContent}}</span>
 								<div class="actions">
 									<button class="btn-picto" type="button" v-on:click="changeReadNow(item)">
 									<img src="images/eye.png" /></button>
@@ -219,7 +223,7 @@
 				<div class="col-md-12">
 					<div class="vuelist" id="waitlist">
 						<h1>待看文章</h1>
-						<div>正在阅读的文章：{{ nowread_id }}</div>
+						<div>正在阅读的文章：{{ nowread_label }}</div>
 						<template v-if="todo.length">
 						<ul>
 							<li stagger="5000" v-bind:class="item.done ? 'done' : ''" v-for="item in todoByStatus">
@@ -235,7 +239,7 @@
 								</div>
 							</li>
 						</ul>
-						<togglebutton label="移动已看文章" name="movedone" v-on:clicked="movedonetoogle"></togglebutton>
+						<togglebutton label="移动已看文章" name="movewaitdone" v-on:clicked="movewaitdonetoogle"></togglebutton>
 						</template>
 						<p class="emptylist" v-else="">你的待看文章列表是空的。</p>
 					</div>
@@ -252,24 +256,35 @@
 		<script type="text/javascript">
 			var showornot = false;
 			$("#sidebutton").click(function() {
-			if (showornot == false) {
-			$("#siderbar").removeClass('sidemovein');
-			$("#siderbar").addClass('sidemoveout');
-			showornot = true;
-			} else {
-			$("#siderbar").removeClass('sidemoveout');
-			$("#siderbar").addClass('sidemovein');
-			showornot = false;
-			}
+				if (showornot == false) {
+					$("#siderbar").removeClass('sidemovein');
+					$("#siderbar").addClass('sidemoveout');
+					showornot = true;
+				} else {
+					$("#siderbar").removeClass('sidemoveout');
+					$("#siderbar").addClass('sidemovein');
+					showornot = false;
+				}
 			});
 			var news_first_img = $("#news_content").find("img").attr("src");
 			if (news_first_img != null) {
-			$('#news_headimg').css('background-image', "url('" + news_first_img + "')");
+				$('#news_headimg').css('background-image', "url('" + news_first_img + "')");
 			}
  
+ 
+			var Main = document.getElementById("newspage");
+			console.log(Main.scrollHeight); 
+			Main.onscroll = function () {  
+				document.getElementById("circleprocess").setAttribute("stroke-dasharray",(Main.scrollTop/Main.scrollHeight)*1100+" 10000");      
+			}
+
+			document.getElementById("scrolltopbtn").onclick = function(){
+				Main.scrollTo(0,0);
+				console.log("asdaassas");
+			}
 
 
-
+			
 			//右下角弹出侧边栏固定块
 			// layui.use('util', function(){
 			//   var util = layui.util;

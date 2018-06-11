@@ -1,20 +1,15 @@
 /*3D标签云*/
 var tags = [
-{ id: 1498627266558, label: "小米" },
-{ id: 1498627266557, label: "Unity" },
-{ id: 1498627266558, label: "西甲" },
-{ id: 1498627266557, label: "NBA" },
-{ id: 1498627266558, label: "杜兰特" },
-{ id: 1498627266557, label: "卡卡" },
-{ id: 1498627266558, label: "科幻片" },
-{ id: 1498627266557, label: "周星驰" },
-{ id: 1498627266556, label: "独立游戏" }
+{ tagId: 0, tagContent: "暂无标签" }
 ];
+
+var userId=1;
+var url_UserTagList = "http://localhost:8080/UserTagList?userId="+userId;
 
 function reloadTagCloud(tags) {
     var tagcloudHTML = "<div class='tagcloud' id='tagcloud'>";
     for (var i = 0; i < tags.length; i++) {
-        tagcloudHTML += ("<a>" + tags[i].label + "</a>");
+        tagcloudHTML += ("<a>" + tags[i].tagContent + "</a>");
     }
     tagcloudHTML += "</div>";
     document.getElementById("wrapper").innerHTML = tagcloudHTML;
@@ -28,8 +23,10 @@ function reloadTagCloud(tags) {
         keep: false //鼠标移出组件后是否继续随鼠标滚动, 取值: false, true(默认) 对应 减速至初速度滚动, 随鼠标滚动
     });
 }
+
 reloadTagCloud(tags);
-var tagshow = new Vue({
+
+var taglist = new Vue({
     el: '#taglist',
     data: {
         newtag: '',
@@ -38,12 +35,33 @@ var tagshow = new Vue({
     methods: {
         addItem: function() {
             var today = new Date();
-            this.tags.push({ id: today.getTime(), label: this.newtag });
+            this.tags.push({ tagId: today.getTime(), tagContent: this.newtag });
             this.newtag = '';
         },
         deleteItemFromList: function(item) {
             let index = this.tags.indexOf(item)
             this.tags.splice(index, 1);
+        },
+        refreshList: function(){
+            var xhr = new XMLHttpRequest();
+            var url = url_UserTagList;
+            console.log(url);
+            xhr.open("POST", url, true);
+            this_list = this;
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
+                    var str = "";
+                    str = xhr.responseText;
+                    newslistdata = JSON.parse(str);
+                    tags = newslistdata;
+                    this_list.tags = tags;
+                    reloadTagCloud(tags);
+                    console.log(str);
+                }
+            };
+            xhr.send();
         }
     }
 });
+
+taglist.refreshList();

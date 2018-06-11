@@ -1,5 +1,6 @@
 
-var nowread_id = 1498627266558;
+var nowread_id = 1;
+var nowread_label ="";
 
 Vue.component('togglebutton', {
     props: ['label', 'name'],
@@ -35,7 +36,8 @@ var waitlist = new Vue({
             { id: 1498627266557, label: "Code a todo list", done: false, date: '2018/5/19' },
             { id: 1498627266556, label: "Learn something else", done: false, date: '2018/5/19' }
         ],
-        nowread_id: nowread_id
+        nowread_id: nowread_id,
+        nowread_label : nowread_label
     },
     methods: {
         markAsDoneOrUndone: function(item) {
@@ -48,8 +50,10 @@ var waitlist = new Vue({
         changeReadNow: function(item) {
             this.nowread_id = item.id;
             nowread_id = item.id;
+            this.nowread_label = item.label;
+            nowread_label = item.label;
         },
-        movedonetoogle: function(active) {
+        movewaitdonetoogle: function(active) {
             this.sortByStatus = active;
         }
     },

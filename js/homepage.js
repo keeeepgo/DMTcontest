@@ -2,10 +2,9 @@
 
     var nav = $('nav'),
         menu = $('nav h1'),
-        main = $('main'),
         open = false,
         hover = false;
-    var main = $('.someMain'),
+    var main = $('#Main'),
         select = $('ul li');
 
     menu.on('click', function () {
