@@ -46,7 +46,7 @@ var taglist = new Vue({
             var xhr = new XMLHttpRequest();
             var url = url_UserTagList;
             console.log(url);
-            xhr.open("POST", url, true);
+            xhr.open("GET", url, true);
             this_list = this;
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
