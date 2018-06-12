@@ -30,7 +30,7 @@ Vue.component('togglebutton', {
 
 
 function refreshNews(newsId){
-    var url_news = "http://localhost:8080/News?newsId="+newsId;
+    var url_News = "http://localhost:8080/News?newsId="+newsId;
     var xhr = new XMLHttpRequest();
     var url = url_news;
     xhr.open("GET", url, true);
@@ -38,9 +38,19 @@ function refreshNews(newsId){
         if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
             var str = "";
             str = xhr.responseText;
+ 
             newsContent = JSON.parse(str);
-            $("#news_title").val(newsContent['newsTitle']);
-            $("news_content").html(newsContent['newsContent']) ;
+            $("#news_title").html(newsContent['newsTitle']);
+            $("#news_content").html(newsContent['newsContent']) ;
+            //图片数小于2才改
+            // console.log($("#news_content").children("img") );
+            // if($("#news_content").children("img").length >= 2){
+            //     var news_first_img = $("#news_content").find("img").attr("src");
+            //     if (news_first_img != null) {
+            //         $('#news_headimg').css('background-image', "url('" + news_first_img + "')");
+            //     }
+            // }
+            
         }
     };
     xhr.send();
@@ -64,7 +74,7 @@ var newslist = new Vue({
         changeReadNow: function(item) {
             this.nowread_newsId = item.newsId;
             nowread_newsId = item.newsId;
-            console.log(nowread_newsId);
+            //console.log(nowread_newsId);
             this.nowread_newsTitle = item.newsTitle;
             nowread_newsTitle = item.newsTitle;
             //diaoyong函数
@@ -77,7 +87,7 @@ var newslist = new Vue({
             var xhr = new XMLHttpRequest();
             var url = url_RecommendNewsList;
             console.log(url);
-            xhr.open("POST", url, true);
+            xhr.open("GET", url, true);
             var this_list = this;
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
