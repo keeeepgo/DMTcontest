@@ -32,7 +32,7 @@ Vue.component('togglebutton', {
 function refreshNews(newsId){
     var url_news = "http://localhost:8080/News?newsId="+newsId;
     var xhr = new XMLHttpRequest();
-    var url = url_News;
+    var url = url_news;
     xhr.open("GET", url, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
