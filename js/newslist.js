@@ -28,6 +28,7 @@ Vue.component('togglebutton', {
     }
 });
 
+var url_defalut_img = "images/news_banner.png";
 
 function refreshNews(newsId){
     var url_News = "http://localhost:8080/News?newsId="+newsId;
@@ -43,13 +44,16 @@ function refreshNews(newsId){
             $("#news_title").html(newsContent['newsTitle']);
             $("#news_content").html(newsContent['newsContent']) ;
             //图片数小于2才改
-            // console.log($("#news_content").children("img") );
-            // if($("#news_content").children("img").length >= 2){
-            //     var news_first_img = $("#news_content").find("img").attr("src");
-            //     if (news_first_img != null) {
-            //         $('#news_headimg').css('background-image', "url('" + news_first_img + "')");
-            //     }
-            // }
+            console.log($("#news_content").find("img") );
+            if($("#news_content").find("img").length >= 2){
+                var news_imgs = $("#news_content").find("img");
+                var news_first_img = news_imgs[0]["src"];
+                if (news_first_img != null) {
+                    $('#news_headimg').css('background-image', "url('" + news_first_img + "')");
+                }
+            }else{
+                $('#news_headimg').css('background-image',"url('" + url_defalut_img + "')" );
+            }
             
         }
     };
