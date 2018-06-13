@@ -3,8 +3,7 @@ var tags = [
 { tagId: 0, tagContent: "暂无标签" }
 ];
 
-var userId=1;
-var url_UserTagList = "http://localhost:8080/UserTagList?userId="+userId;
+
 
 function reloadTagCloud(tags) {
     var tagcloudHTML = "<div class='tagcloud' id='tagcloud'>";
@@ -26,6 +25,9 @@ function reloadTagCloud(tags) {
 
 reloadTagCloud(tags);
 
+var userId=1;
+var url_UserTagList = "http://localhost:8080/UserTagList";
+
 var taglist = new Vue({
     el: '#taglist',
     data: {
@@ -34,20 +36,56 @@ var taglist = new Vue({
     },
     methods: {
         addItem: function() {
-            var today = new Date();
-            this.tags.push({ tagId: today.getTime(), tagContent: this.newtag });
-            this.newtag = '';
+            var tagContent = this.newtag;
+            console.log(tagContent);
+            var this_list = this;
+            $.ajax({
+                type: "POST",
+                url: url_UserTagList,
+                data: "&userId="+userId+"&tagContent="+tagContent,
+                success: function(){
+                    this_list.newtag = '';  
+                    this_list.refreshList();                  
+                }
+            });
+
         },
         deleteItemFromList: function(item) {
-            let index = this.tags.indexOf(item)
-            this.tags.splice(index, 1);
+            // let index = this.tags.indexOf(item)
+            // this.tags.splice(index, 1);
+            console.log(url_UserTagList);
+            $.ajax({
+                options:{Origin: "my"},
+                //url: url_UserTagList+"?userId="+userId+"&tagId="+item.tagId,
+                url: url_UserTagList,
+                data: "&userId=1&tagId=haha",
+                type: "DELETE",
+                xhrFields: {  
+                    withCredentials: true // 设置运行跨域操作  
+                  },  
+                success: function(){
+                    this_list.refreshList();                  
+                },
+                complete:function(xhr){
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
+                            this_list.refreshList(); 
+                            console.log("删除成功");
+                        }
+                    };
+                },
+                error:function(xhr,str){
+                    console.log(xhr);
+                    console.log(str);
+                }
+            });
         },
         refreshList: function(){
             var xhr = new XMLHttpRequest();
-            var url = url_UserTagList;
+            var url = url_UserTagList+"?userId="+userId;
             console.log(url);
             xhr.open("GET", url, true);
-            this_list = this;
+            var this_list = this;
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
                     var str = "";

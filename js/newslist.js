@@ -29,11 +29,11 @@ Vue.component('togglebutton', {
 });
 
 var url_defalut_img = "images/news_banner.png";
+var url_News = "http://localhost:8080/News?newsId=";
 
 function refreshNews(newsId){
-    var url_News = "http://localhost:8080/News?newsId="+newsId;
     var xhr = new XMLHttpRequest();
-    var url = url_news;
+    var url = url_News+newsId;
     xhr.open("GET", url, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
@@ -44,7 +44,7 @@ function refreshNews(newsId){
             $("#news_title").html(newsContent['newsTitle']);
             $("#news_content").html(newsContent['newsContent']) ;
             //图片数小于2才改
-            console.log($("#news_content").find("img") );
+            //console.log($("#news_content").find("img") );
             if($("#news_content").find("img").length >= 2){
                 var news_imgs = $("#news_content").find("img");
                 var news_first_img = news_imgs[0]["src"];
@@ -82,6 +82,7 @@ var newslist = new Vue({
             this.nowread_newsTitle = item.newsTitle;
             nowread_newsTitle = item.newsTitle;
             //diaoyong函数
+            console.log(nowread_newsId);
             refreshNews(nowread_newsId);
         },
         movedonetoogle: function(active) {
