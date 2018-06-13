@@ -62,6 +62,13 @@
 			    -webkit-transition: stroke-dasharray .25s;
 			    transition: stroke-dasharray .25s;
 			}
+			.titlemovedown{
+				position:fixed;
+				top:0;
+				right:15%;
+			    background-color:white;
+			    margin:0px;
+			}
 		</style>
 	</head>
 	<body>
@@ -108,7 +115,8 @@
 					</div>
 					
 					<div class="newsborder col-md-8 " style="padding-right:7rem">
-						<div id="news_title" style="font-size: 2.25rem;margin: 1rem;">中国民企自主研制通用飞机GA20今日在江西南昌下线，并完成首次滑跑演示。<hr class="layui-bg-cyan"></div>
+						<div id="news_title" style="font-size: 2.25rem;">中国民企自主研制通用飞机GA20今日在江西南昌下线，并完成首次滑跑演示。</div>
+						<hr class="layui-bg-cyan">
 						<div id="news_headimg" style="height: 200px;width:100%;background-image:url('images/news_banner.png');background-repeat:no-repeat;background-attachment:fixed;background-position:center;background-position: 110% 40%; background-size:50%;"></div>
 						<div id="news_content"  >
 							<div class="news_txt" data-size="standard">
@@ -176,11 +184,21 @@
 					</div>
 
 					<div style="position: fixed;top:30%;right: 12%;">
-						<svg id="process" width="70" height="70" viewbox="0 0 500 500" >
-						    <circle cx="250" cy="250" r="150" stroke="#D1D3D7" fill="white"></circle>
-						    <circle id="circleprocess" cx="250" cy="250" r="200" stroke-width="10" stroke="#353441" stroke-linecap='square' fill="none" transform="matrix(0,-1,1,0,0,500)" stroke-dasharray="0 10000"></circle>
-						</svg>
-						<button id="scrolltopbtn" style="border:0px ;background: transparent; position: absolute;top:30%;right: 30%;z-index: 10000;"><i aria-hidden="true" class="material-icons" style="font-size: 3rem;color: #353441">arrow_upward</i></button>
+						<div>
+								<svg id="process" width="70" height="70" viewbox="0 0 500 500" >
+							    <circle cx="250" cy="250" r="150" stroke-width="20" stroke="#D1D3D7" fill="white"></circle>
+							    <circle id="circleprocess" cx="250" cy="250" r="200" stroke-width="10" stroke="#353441" stroke-linecap='square' fill="none" transform="matrix(0,-1,1,0,0,500)" stroke-dasharray="0 10000"></circle>
+							</svg>
+							<button id="scrolltop_btn" style="border:0px ;background: transparent; position: absolute;top:15%;right: 30%;z-index: 10000;"><i id="process_icon" aria-hidden="true" class="material-icons" style="font-size: 3rem;color: #353441">arrow_upward</i></button>
+						</div>
+						
+						<div>
+							<svg id="process" width="70" height="70" viewbox="0 0 500 500" >
+							    <circle cx="250" cy="250" r="150" stroke-width="20" stroke="#D1D3D7" fill="white"></circle>
+							   
+							</svg>
+							<button id="add_waitnews_btn" type="button" style="border:0px ;background: transparent; position: absolute;top:65%;right: 30%;z-index: 10000;"><i aria-hidden="true" class="material-icons" style="font-size: 3rem;color: #353441">add</i></button>
+						</div>
 					</div>
 				</div>
 			</section>
@@ -225,12 +243,11 @@
 				<div class="col-md-12">
 					<div class="vuelist" id="waitlist">
 						<h1>待看文章</h1>
-						<div>正在阅读的文章：{{ nowread_label }}</div>
+						<div>正在阅读的文章：{{ nowread_newsTitle }}</div>
 						<template v-if="todo.length">
 						<ul>
 							<li stagger="5000" v-bind:class="item.done ? 'done' : ''" v-for="item in todoByStatus">
-								<span class="date">{{item.date}}</span>
-								<span class="label">{{item.label}}</span>
+								<span class="label">{{item.newsTitle}}</span>
 								<div class="actions">
 									<button class="btn-picto" type="button" v-on:click="changeReadNow(item)">
 									<img src="images/eye.png" /></button>
@@ -254,7 +271,13 @@
 					</div>
 			</div>
 		</div>
-
+		
+		<script src="js/news.js"></script>
+		<script src="js/newslist.js"></script>
+		<script src="js/taglist.js"></script>
+		<script src="js/waitlist.js"></script>
+		<script src="js/homepage.js"></script>
+		<script src="js/changeFont.js"></script>
 		<script type="text/javascript">
 			var showornot = false;
 			$("#sidebutton").click(function() {
@@ -273,50 +296,59 @@
 			var Main = document.getElementById("newspage");
 			console.log(Main.scrollHeight); 
 			Main.onscroll = function () {  
-				document.getElementById("circleprocess").setAttribute("stroke-dasharray",(Main.scrollTop/Main.scrollHeight)*1500+" 10000");      
+				if(Main.scrollTop>=200){
+					$("#news_title").addClass("titlemovedown");
+				}else{
+					$("#news_title").removeClass("titlemovedown");
+				}
+				document.getElementById("circleprocess").setAttribute("stroke-dasharray",(Main.scrollTop/(Main.scrollHeight-document.body.clientHeight))*1500+" 10000");  
+				 
+				if(Main.scrollTop/(Main.scrollHeight-document.body.clientHeight) >= 0.9){
+					$("#process_icon").html("done");
+				}    
 			}
 
-			document.getElementById("scrolltopbtn").onclick = function(){
-				Main.scrollTo(0,0);
+			var url_FinishedNews = "http://localhost:8080/FinishedNews?userId="+userId+"&newsId="+nowread_newsId;;
+			function PostFinishedNews() {
+				var xhr = new XMLHttpRequest();
+	            var url = url_WaitNewsList;
+	            xhr.open("POST", url, true);
+	            var this_list = this;
+	            xhr.onreadystatechange = function() {
+	                if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
+	                	waitlist.refreshList();
+	                }
+	            };
+	            xhr.send();
 			}
 
+			//侧边按钮
+			document.getElementById("scrolltop_btn").onclick = function(){
+				if($("#process_icon").html() == "arrow_upward"){
+					Main.scrollTo(0,0);
+				}
+				if($("#process_icon").html() == "done"){
 
-			
-			//右下角弹出侧边栏固定块
-			// layui.use('util', function(){
-			//   var util = layui.util;
-			//   //执行
-			//     util.fixbar({
-			//     bar1: true
-			//     ,css: {right: 50%, bottom: 10%,z-index: 1000}
-			//     ,bgcolor: '#000'
-			//     ,click: function(type){
-			//       if(type === 'bar1'){
-			//         if(showornot == false){
-			//             $("#siderbar").removeClass('sidemovein');
-			//             $("#siderbar").addClass('sidemoveout');
-			//             showornot = true;
-			//         }else{
-			//             $("#siderbar").removeClass('sidemoveout');
-			//         $("#siderbar").addClass('sidemovein');
-			//             showornot = false;
-			//         }
-			//       }
-			//     }
-			//   });
-			// });
+					$("#process_icon").html("arrow_upward");
+				}
+			}
+
+			//收入待看文章列表
+			var userId = 1;
+			var url_WaitNewsList = "http://localhost:8080/WaitNewsList?userId="+userId+"&newsId="+nowread_newsId;
+			document.getElementById("add_waitnews_btn").onclick = function(){
+				var xhr = new XMLHttpRequest();
+	            var url = url_WaitNewsList;
+	            xhr.open("POST", url, true);
+	            var this_list = this;
+	            xhr.onreadystatechange = function() {
+	                if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
+	                	waitlist.refreshList();
+	                }
+	            };
+	            xhr.send();
+			}
+
 		</script>
-		<script>
-			function inputimage() {
-			$('<img id="imgNoteShare" class="img_share" title="选中内容分享到笔记" src="images/huaci.png" />').appendTo('body');
-			$('<img id="imgNewsSearch" class="img_search" title="选中内容搜索" src="images/sousuo.png" />').appendTo('body');
-			}
-		</script>
-		<script src="js/news.js"></script>
-		<script src="js/newslist.js"></script>
-		<script src="js/taglist.js"></script>
-		<script src="js/waitlist.js"></script>
-		<script src="js/homepage.js"></script>
-		<script src="js/changeFont.js"></script>
 	</body>
 </html>

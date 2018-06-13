@@ -1,5 +1,8 @@
 
-    
+                function inputimage() {
+            $('<img id="imgNoteShare" class="img_share" title="选中内容分享到笔记" src="images/huaci.png"  />').appendTo('body');
+            $('<img id="imgNewsSearch" class="img_search" title="选中内容搜索" src="images/sousuo.png" />').appendTo('body');
+            }
     //图片导入方法
     inputimage();
 
@@ -40,13 +43,14 @@
             $('#imgNoteShare').css({
                 display: 'inline',
                 left: left,
-                top: top + 50
+                top: top + 50,
             });
             $("#imgNewsSearch").css({
                 display : 'inline',
                 left: left + 30,
-                top : top+50
+                top : top+50,
             });
+
         } else {
             $('#imgNoteShare').css('display', 'none');
             $('#imgNewsSearch').css('display', 'none');
