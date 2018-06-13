@@ -12,7 +12,7 @@ nav {
     left: 0;
     bottom: 0;
     width: 16em;
-    background-color: #353441;
+    background-color: #fff;
     -webkit-transform: translateX(-16em);
     transform: translateX(-16em);
 }
@@ -39,16 +39,16 @@ nav h1 {
     font-size: .8em;
     font-weight: 800;
     letter-spacing: 1px;
-    color: #9DC6D1;
+    color: #393e46;
     text-transform: uppercase;
     text-align: center;
-    background-color: #353441;
+    background-color: #eee;
     cursor: pointer;
 }
 
 nav h1:hover {
-    color: #353441;
-    background: #fff;
+    color: #6699CC;
+    background: #a9a9a9;
 }
 
 nav ul {
@@ -63,12 +63,8 @@ nav li {
     height: 60px;
     color: #9DC6D1;
     line-height: 60px;
-    background-color: #353441;
 }
 
-nav li:nth-of-type(2n) {
-    background-color: #3a3947;
-}
 
 nav li:hover {
     background: #fff;
@@ -146,3 +142,12 @@ section p {
     margin: 16px 0;
 }
 */
+.label{
+    color: #000;
+}
+
+#sidebar{
+    text-align: center;
+    line-height: 1.5;
+    padding-left: 8px;
+}
