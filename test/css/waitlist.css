@@ -1,3 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    background: #f7f1f1;
+    font-size: 3vh;
+    font-family: 'Microsoft Yahei', sans-serif;
+}
 
 @keyframes strikeitem {
     to {
@@ -5,26 +17,24 @@
     }
 }
 
-.vuelist {
+#waitlist {
     margin: 5px;
     padding: 2vh 3vh 3vh;
-    background: #fff;
-
+    width: 100%;
+    height: 100%;
+    background: #90AFC5;
+    color: #FFF;
 }
 
-.vuelist h1 {
+#waitlist h1 {
     /*text-align:center;*/
     font-weight: normal;
     font-size: 5vh;
     letter-spacing: 0.05em;
-    border-bottom: 1px solid #a9a9a9;
-    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, .3);
 }
 
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
-    color: #000;
-}
-.vuelist .emptylist {
+#waitlist .emptylist {
     margin-top: 2.6vh;
     text-align: center;
     letter-spacing: .05em;
@@ -32,12 +42,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     opacity: 0.8;
 }
 
-.vuelist ul {
+#waitlist ul {
     margin-top: 2.6vh;
     list-style: none;
 }
 
-.vuelist li {
+#waitlist li {
     display: flex;
     flex-wrap: wrap;
     margin: 0 -3vh 4px;
@@ -47,36 +57,32 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     background: rgba(255, 255, 255, 0.1);
 }
 
-.vuelist .actions {
+#waitlist .actions {
     flex-shrink: 1;
     padding-left: 0.7em;
 }
 
-.vuelist .date{
+#waitlist .date{
     flex-shrink: 1;
     font-size: 2vh;
     padding-right: 1em;
 }
 
-.vuelist .label {
+#waitlist .label {
     flex-shrink: 1;
     position: relative;
     transition: opacity .2s linear;
 }
 
-.vuelist .description {
+#waitlist .description {
     width: 100%;
 }
 
-.vuelist .done .label {
+#waitlist .done .label {
     opacity: .6;
 }
 
-#newslist .label{
-    cursor: pointer;
-}
-
-.vuelist .done .label:before {
+#waitlist .done .label:before {
     content: '';
     position: absolute;
     top: 50%;
@@ -88,12 +94,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     animation: strikeitem .3s ease-out 0s forwards;
 }
 
-.vuelist .btn-picto {
+#waitlist .btn-picto {
     border: none;
     background: none;
     -webkit-appearance: none;
     cursor: pointer;
-    color: #000;
+    color: #FFF;
 }
 
 
@@ -170,7 +176,7 @@ form button {
     margin-left: 0.6em;
     width: 38px;
     height: 22px;
-    background: #8f9299;
+    background: white;
     /*border:1px solid black;*/
     border-radius: 999px;
     cursor: pointer;

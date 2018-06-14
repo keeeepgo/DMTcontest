@@ -1,12 +1,14 @@
 
-#newslist {
+#taglist {
     margin: 5px;
     padding: 2vh 3vh 3vh;
-    background: #353441;
+    width: 100%;
+    height: 100%;
+    background: #90AFC5;
     color: #FFF;
 }
 
-#newslist h1 {
+#taglist h1 {
     /*text-align:center;*/
     font-weight: normal;
     font-size: 5vh;
@@ -14,7 +16,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, .3);
 }
 
-#newslist .emptylist {
+#taglist .emptylist {
     margin-top: 2.6vh;
     text-align: center;
     letter-spacing: .05em;
@@ -22,12 +24,12 @@
     opacity: 0.8;
 }
 
-#newslist ul {
+#taglist ul {
     margin-top: 2.6vh;
     list-style: none;
 }
 
-#newslist li {
+#taglist li {
     display: flex;
     flex-wrap: wrap;
     margin: 0 -3vh 4px;
@@ -37,32 +39,32 @@
     background: rgba(255, 255, 255, 0.1);
 }
 
-#newslist .actions {
+#taglist .actions {
     flex-shrink: 1;
     padding-left: 0.7em;
 }
 
-#newslist .date{
+#taglist .date{
     flex-shrink: 1;
     font-size: 2vh;
     padding-right: 1em;
 }
 
-#newslist .label {
+#taglist .label {
     flex-shrink: 1;
     position: relative;
     transition: opacity .2s linear;
 }
 
-#newslist .description {
+#taglist .description {
     width: 100%;
 }
 
-#newslist .done .label {
+#taglist .done .label {
     opacity: .6;
 }
 
-#newslist .done .label:before {
+#taglist .done .label:before {
     content: '';
     position: absolute;
     top: 50%;
@@ -74,7 +76,7 @@
     animation: strikeitem .3s ease-out 0s forwards;
 }
 
-#newslist .btn-picto {
+#taglist .btn-picto {
     border: none;
     background: none;
     -webkit-appearance: none;
