@@ -62,7 +62,7 @@ function refreshNews(newsId){
 
 var userId=1;
 var url_RecommendNewsList = "http://localhost:8080/RecommendNewsList?userId="+userId;
-var newslistdata = [{newsId : 1,newsTitle:"asdadas",done:false}];
+var newslistdata = [{newsId : 1,newsTitle:"暂无文章",done:false}];
 var newslist = new Vue({
     el: '#newslist',
     data: {

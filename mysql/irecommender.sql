@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50610
 File Encoding         : 65001
 
-Date: 2018-06-11 17:00:22
+Date: 2018-06-13 12:34:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -439,10 +439,10 @@ CREATE TABLE `note` (
 INSERT INTO `note` VALUES ('1', '1', '2018-06-09', '哈哈哈');
 
 -- ----------------------------
--- Table structure for read
+-- Table structure for read_record
 -- ----------------------------
-DROP TABLE IF EXISTS `read`;
-CREATE TABLE `read` (
+DROP TABLE IF EXISTS `read_record`;
+CREATE TABLE `read_record` (
   `userId` bigint(20) NOT NULL,
   `newsId` bigint(20) NOT NULL,
   `grade` int(2) DEFAULT NULL,
@@ -451,9 +451,10 @@ CREATE TABLE `read` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of read
+-- Records of read_record
 -- ----------------------------
-INSERT INTO `read` VALUES ('1', '1', '0', '0');
+INSERT INTO `read_record` VALUES ('1', '1', '0', '0');
+INSERT INTO `read_record` VALUES ('1', '2', '0', '2');
 
 -- ----------------------------
 -- Table structure for tag
@@ -463,7 +464,7 @@ CREATE TABLE `tag` (
   `tagId` bigint(20) NOT NULL AUTO_INCREMENT,
   `tagContent` varchar(20) NOT NULL,
   PRIMARY KEY (`tagId`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tag
@@ -473,7 +474,11 @@ INSERT INTO `tag` VALUES ('2', '世界杯');
 INSERT INTO `tag` VALUES ('3', 'NBA');
 INSERT INTO `tag` VALUES ('4', 'Unity');
 INSERT INTO `tag` VALUES ('5', 'Valkan');
-INSERT INTO `tag` VALUES ('6', 'Valkan');
+INSERT INTO `tag` VALUES ('33', '辣条');
+INSERT INTO `tag` VALUES ('34', '里昂');
+INSERT INTO `tag` VALUES ('35', '白痴');
+INSERT INTO `tag` VALUES ('36', '阿斯达');
+INSERT INTO `tag` VALUES ('37', '白茶');
 
 -- ----------------------------
 -- Table structure for user
@@ -528,7 +533,11 @@ INSERT INTO `user_tag` VALUES ('1', '2', '0.7000000000');
 INSERT INTO `user_tag` VALUES ('1', '3', '0.8000000000');
 INSERT INTO `user_tag` VALUES ('1', '4', '0.1000000000');
 INSERT INTO `user_tag` VALUES ('1', '5', '0.0000000000');
-INSERT INTO `user_tag` VALUES ('1', '6', '0.0000000000');
+INSERT INTO `user_tag` VALUES ('1', '33', '0.0000000000');
+INSERT INTO `user_tag` VALUES ('1', '34', '0.0000000000');
+INSERT INTO `user_tag` VALUES ('1', '35', '0.0000000000');
+INSERT INTO `user_tag` VALUES ('1', '36', '0.0000000000');
+INSERT INTO `user_tag` VALUES ('1', '37', '0.0000000000');
 
 -- ----------------------------
 -- Table structure for vitality

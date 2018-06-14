@@ -8,6 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="css/news.css" />
 		<link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.css" />
 		<link rel="stylesheet" type="text/css" href="css/homepage.css" />
+		<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
 		<script src="js/jquery-3.3.1.js"></script>
 		<script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 		<script type="text/javascript" src="layui/layui.js"></script>
@@ -177,29 +178,39 @@
 							</div>
 							<div class="go_to_topic"></div>
 						</div>
+						<div id="score_news_div">
+							<div id="score_news_rate"></div>
+						</div>
+						
 					</div>
 					<div id="fontcontrols">
 						<a href="#" id="small">A</a>
 						<a href="#" id="medium" class="selected">A</a>
 						<a href="#" id="large">A</a>
 					</div>
-
-					<div style="position: fixed;top:30%;right: 11%;">
+					
+					<div style="position: fixed;top:30%;right: 11%;" >
 						<div>
-								<svg id="process" width="70" height="70" viewbox="0 0 500 500" >
+							<svg id="process_svg" width="70" height="70" viewbox="0 0 500 500" >
 							    <circle cx="250" cy="250" r="150" stroke-width="20" stroke="#D1D3D7" fill="white"></circle>
 							    <circle id="circleprocess" cx="250" cy="250" r="200" stroke-width="10" stroke="#353441" stroke-linecap='square' fill="none" transform="matrix(0,-1,1,0,0,500)" stroke-dasharray="0 10000"></circle>
 							</svg>
-							<button id="scrolltop_btn" style="border:0px ;background: transparent; position: absolute;top:15%;right: 30%;z-index: 10000;"><i id="process_icon" aria-hidden="true" class="material-icons" style="font-size: 3rem;color: #353441">arrow_upward</i></button>
+							<span id="scrolltop_span" style="cursor:pointer;border:0px ;background: transparent; position: absolute;top:15%;right: 30%;z-index: 10000;"><i id="process_icon" aria-hidden="true" class="material-icons" style="font-size: 3rem;color: #353441">arrow_upward</i></span>
 						</div>
 						
 						<div>
-							<svg id="process" width="70" height="70" viewbox="0 0 500 500" >
+							<svg id="add_waitnews_svg" width="70" height="70" viewbox="0 0 500 500" >
 							    <circle cx="250" cy="250" r="150" stroke-width="20" stroke="#D1D3D7" fill="white"></circle>
 							   
 							</svg>
-							<button id="add_waitnews_btn" type="button" style="border:0px ;background: transparent; position: absolute;top:65%;right: 30%;z-index: 10000;"><i aria-hidden="true" class="material-icons" style="font-size: 3rem;color: #353441">add</i></button>
+							<span id="add_waitnews_span" style="cursor:pointer;border:0px ;background: transparent; position: absolute;top:65%;right: 30%;z-index: 10000;"><i aria-hidden="true" class="material-icons" style="font-size: 3rem;color: #353441">add</i></span>
 						</div>
+					</div>
+					<div style="position: fixed;top:80%;right: 11%;">
+						<svg id="score_news_svg" width="70" height="70" viewbox="0 0 500 500" >
+							<circle cx="250" cy="250" r="150" stroke-width="20" stroke="#D1D3D7" fill="white"></circle>   
+						</svg>
+						<span id="score_news_span" type="button" style="cursor:pointer;border:0px ;background: transparent; position: absolute;top:30%;right: 30%;z-index: 10000;"><i aria-hidden="true" class="material-icons" style="font-size: 3rem;color: #353441">done</i></span>
 					</div>
 				</div>
 			</section>
@@ -280,6 +291,51 @@
 		<script src="js/homepage.js"></script>
 		<script src="js/changeFont.js"></script>
 		<script type="text/javascript">
+			layui.use('layer', function(){
+				var layer = layui.layer;
+				var add_waitnews_tip;
+				$('#add_waitnews_span').mouseenter(function(){
+					add_waitnews_tip = layer.tips('稍后再看', '#add_waitnews_span', {
+						tips: [2, '#000']
+					});    
+				});
+
+				$('#add_waitnews_span').mouseout(function(){
+					var layer = layui.layer;
+					layer.close(add_waitnews_tip);
+				});
+
+				$('#scrolltop_span').mouseenter(function(){
+					add_waitnews_tip = layer.tips('回到顶端', '#scrolltop_span', {
+						tips: [2, '#000']
+					});    
+				});
+
+				$('#scrolltop_span').mouseout(function(){
+					var layer = layui.layer;
+					layer.close(add_waitnews_tip);
+				});
+			}); 
+			
+			layui.use(['rate'], function(){
+  				var rate = layui.rate;
+  				rate.render({
+				    elem: '#score_news_rate'
+				    ,value: 3
+				    ,text: true
+				    ,setText: function(value){ //自定义文本的回调
+				      var arrs = {
+				        '1': '厌恶'
+				        ,'2': '不喜欢'
+				        ,'3': '没感觉'
+				        ,'4': '喜欢'
+				        ,'5': '超爱'
+				      };
+				      this.span.text(arrs[value] || ( value + "星"));
+				    }
+				});
+  			});
+
 			var showornot = false;
 			$("#sidebutton").click(function() {
 				if (showornot == false) {
@@ -305,7 +361,7 @@
 				document.getElementById("circleprocess").setAttribute("stroke-dasharray",(Main.scrollTop/(Main.scrollHeight-document.body.clientHeight))*1500+" 10000");  
 				 
 				if(Main.scrollTop/(Main.scrollHeight-document.body.clientHeight) >= 0.9){
-					$("#process_icon").html("done");
+					
 				}    
 			}
 
@@ -324,20 +380,14 @@
 			}
 
 			//侧边按钮
-			document.getElementById("scrolltop_btn").onclick = function(){
-				if($("#process_icon").html() == "arrow_upward"){
-					Main.scrollTo(0,0);
-				}
-				if($("#process_icon").html() == "done"){
-
-					$("#process_icon").html("arrow_upward");
-				}
+			document.getElementById("scrolltop_span").onclick = function(){
+				Main.scrollTo(0,0);
 			}
 
 			//收入待看文章列表
 			var userId = 1;
 			var url_WaitNewsList = "http://localhost:8080/WaitNewsList?userId="+userId+"&newsId="+nowread_newsId;
-			document.getElementById("add_waitnews_btn").onclick = function(){
+			document.getElementById("add_waitnews_span").onclick = function(){
 				var xhr = new XMLHttpRequest();
 	            var url = url_WaitNewsList;
 	            xhr.open("POST", url, true);
