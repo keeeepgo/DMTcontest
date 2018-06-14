@@ -9,6 +9,7 @@
     margin: 5px;
     padding: 2vh 3vh 3vh;
     background: #fff;
+    font-family: 微软雅黑, "MicrosoftYaHei", arial, sans-serif;
 
 }
 
@@ -45,6 +46,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     justify-content: space-between;
     align-items: center;
     background: rgba(255, 255, 255, 0.1);
+    color: #000;
 }
 
 .vuelist .actions {
@@ -70,10 +72,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
 
 .vuelist .done .label {
     opacity: .6;
-}
-
-#newslist .label{
-    cursor: pointer;
 }
 
 .vuelist .done .label:before {
@@ -139,7 +137,7 @@ form button:hover {
 form input,
 form button {
     font-family: 'Microsoft Yahei';
-    height: 3vh;
+    height: 5vh;
 }
 
 /* TOOGLE COMPONENT */
