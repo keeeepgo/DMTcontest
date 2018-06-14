@@ -1,6 +1,8 @@
 
 var nowread_newsId = 1;
-var nowread_newsTitle ="";
+var nowread_newsTitle = "";
+var next_newsId = 2;
+var next_newsTitle = "";
 
 
 Vue.component('togglebutton', {
@@ -31,9 +33,9 @@ Vue.component('togglebutton', {
 var url_defalut_img = "images/news_banner.png";
 var url_News = "http://localhost:8080/News?newsId=";
 
-function refreshNews(newsId){
+function refreshNews(nowId,nextId,nextTitle){
     var xhr = new XMLHttpRequest();
-    var url = url_News+newsId;
+    var url = url_News+nowId;
     xhr.open("GET", url, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
@@ -42,7 +44,8 @@ function refreshNews(newsId){
  
             newsContent = JSON.parse(str);
             $("#news_title").html(newsContent['newsTitle']);
-            $("#news_content").html(newsContent['newsContent']) ;
+            $("#news_content").html(newsContent['newsContent']);
+            $("#next_news_title").html(nextTitle);
             //图片数小于2才改
             //console.log($("#news_content").find("img") );
             if($("#news_content").find("img").length >= 2){
@@ -62,7 +65,7 @@ function refreshNews(newsId){
 
 var userId=1;
 var url_RecommendNewsList = "http://localhost:8080/RecommendNewsList?userId="+userId;
-var newslistdata = [{newsId : 1,newsTitle:"暂无文章",done:false}];
+var newslistdata = [];
 var newslist = new Vue({
     el: '#newslist',
     data: {
@@ -81,9 +84,23 @@ var newslist = new Vue({
             //console.log(nowread_newsId);
             this.nowread_newsTitle = item.newsTitle;
             nowread_newsTitle = item.newsTitle;
-            //diaoyong函数
-            console.log(nowread_newsId);
-            refreshNews(nowread_newsId);
+            var find_next_flag = false;
+            for(var i in this.todo){
+                if(find_next_flag == true){
+                    next_newsId = this.todo[i].newsId;
+                    next_newsTitle = this.todo[i].newsTitle;
+                    find_next_flag = false;
+                }
+                if(this.todo[i].newsId==nowread_newsId){
+                    find_next_flag = true;
+                }
+            }
+
+            if(find_next_flag == true){
+                next_newsId = null;
+            }
+
+            refreshNews(nowread_newsId,next_newsId,next_newsTitle);
         },
         movedonetoogle: function(active) {
             this.sortByStatus = active;

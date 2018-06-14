@@ -115,7 +115,7 @@
 							</ul>
 							<togglebutton label="移动已看文章" name="movedone" v-on:clicked="movedonetoogle"></togglebutton>
 							</template>
-							<p class="emptylist" v-else="">你的待看文章列表是空的。</p>
+							<p class="emptylist" v-else="">列表是空的。</p>
 						</div>
 					</div>
 					
@@ -182,7 +182,15 @@
 							<div class="go_to_topic"></div>
 						</div>
 						<div id="score_news_div">
-							<div id="score_news_rate"></div>
+							<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+							  <legend>这篇推送怎么样？评个分吧！
+							  <br><div id="score_news_rate"></div></legend>
+							</fieldset>
+						</div>
+						<div id="next_news_div" class="col-md-offset-3 col-md-8" style="cursor: pointer;">
+							<i id="next_news_icon" aria-hidden="true" class="material-icons" style="font-size: 3rem;color: #353441">expand_more</i>
+							<span>下一篇：</span>
+							<span id="next_news_title" >没有了</span>
 						</div>
 						
 					</div>
@@ -208,12 +216,6 @@
 							</svg>
 							<span id="add_waitnews_span" style="cursor:pointer;border:0px ;background: transparent; position: absolute;top:65%;right: 30%;z-index: 10000;"><i aria-hidden="true" class="material-icons" style="font-size: 3rem;color: #353441">add</i></span>
 						</div>
-					</div>
-					<div style="position: fixed;top:80%;right: 11%;">
-						<svg id="score_news_svg" width="70" height="70" viewbox="0 0 500 500" >
-							<circle cx="250" cy="250" r="150" stroke-width="20" stroke="#D1D3D7" fill="white"></circle>   
-						</svg>
-						<span id="score_news_span" type="button" style="cursor:pointer;border:0px ;background: transparent; position: absolute;top:30%;right: 30%;z-index: 10000;"><i aria-hidden="true" class="material-icons" style="font-size: 3rem;color: #353441">done</i></span>
 					</div>
 				</div>
 			</section>
@@ -246,7 +248,7 @@
 							</li>
 						</ul>
 						</template>
-						<p class="emptylist" v-else="">你的个人标签列表是空的。</p>
+						<p class="emptylist" v-else="">列表是空的。</p>
 						<form name="newform" v-on:submit.prevent="addItem">
 							<label for="newtag">添加到个人标签列表</label>
 							<input id="newtag" name="newtag" type="text" v-model="newtag" />
@@ -275,7 +277,7 @@
 						</ul>
 						<togglebutton label="移动已看文章" name="movewaitdone" v-on:clicked="movewaitdonetoogle"></togglebutton>
 						</template>
-						<p class="emptylist" v-else="">你的待看文章列表是空的。</p>
+						<p class="emptylist" v-else="">列表是空的。</p>
 					</div>
 				</div>
 			</div>
@@ -328,11 +330,11 @@
 				    ,text: true
 				    ,setText: function(value){ //自定义文本的回调
 				      var arrs = {
-				        '1': '厌恶'
-				        ,'2': '不喜欢'
+				        '1': '厌恶  （以后绝对不给你推送这类文章的）'
+				        ,'2': '不喜欢 （以后少给你推送这种文章啦）'
 				        ,'3': '没感觉'
-				        ,'4': '喜欢'
-				        ,'5': '超爱'
+				        ,'4': '喜欢 （以后多多你推送这种文章咯）'
+				        ,'5': '超爱 （有这类文章的话绝对会推送哦）'
 				      };
 				      this.span.text(arrs[value] || ( value + "星"));
 				    }
