@@ -1,23 +1,21 @@
-.newsborder{
+.newsborder {
     padding: 40px;
     text-align: left;
     font-size: 14px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
-
 #fontcontrols {
     padding: 2px;
     width: 3em;
     background: #eee;
     position: fixed;
-    top:15%;
+    top: 150px;
     right: 5%;
     margin: 0 0 0 1200px;
     text-align: center;
     transition: .25s ease-out;
 }
-
 
 #fontcontrols a {
     font-size: 24px;
@@ -54,17 +52,29 @@
     font-size: 75%;
 }
 
+#news_title{
+    font-size: 26px;
+    line-height: 36px;
+    font-weight: 700;
+    margin: 10px 0;
+}
 #news_content h1 {
     font-size: 36px;
     font-weight: bold;
 }
 
 #news_content h2 {
-    font-size: 24px;
+    font-size: 26px;
+    line-height: 36px;
+    font-weight: 700;
     margin: 10px 0;
+    
 }
 
 #news_content p {
+    line-height: 32px;
+    font-stretch: normal;
+    font-weight: normal;
     font-size: 14px;
-    line-height: 20px;
+    font-family: 微软雅黑, "MicrosoftYaHei", arial, sans-serif;
 }

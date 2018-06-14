@@ -64,15 +64,18 @@
 			}
 			.titlemovedown{
 				position:fixed;
-				top:0;
-				right:15%;
+				top:10px;
 			    background-color:white;
-			    margin:0px;
 			}
+
 		</style>
 	</head>
 	<body>
 	<body>
+		<div>
+			
+		</div>
+			<div id="top" style="z-index:100;width: 100%;height:111px;background-color:white;top:0px;right:0; position:float"></div>
 		<nav class="menu-activea">
 			<h1>Menu</h1>
 			<ul>
@@ -91,7 +94,7 @@
 				</li>
 			</ul>
 		</nav>
-		<main id="Main">
+		<main id="Main" style="margin-top:111px">
 			<section id="newspage">
 				<div class="row">
 					<div class="col-md-3">
@@ -116,7 +119,7 @@
 					</div>
 					
 					<div class="newsborder col-md-8 " style="padding-right:7rem">
-						<div id="news_title" style="font-size: 2.25rem;">中国民企自主研制通用飞机GA20今日在江西南昌下线，并完成首次滑跑演示。</div>
+						<div id="news_title">中国民企自主研制通用飞机GA20今日在江西南昌下线，并完成首次滑跑演示。</div>
 						<hr class="layui-bg-cyan">
 						<div id="news_headimg" style="height: 200px;width:100%;background-image:url('images/news_banner.png');background-repeat:no-repeat;background-attachment:fixed;background-position:center;background-position: 110% 40%; background-size:50%;"></div>
 						<div id="news_content"  >
@@ -204,7 +207,7 @@
 				</div>
 			</section>
 		</main>
-		<a id="sidebutton" style="position: fixed;top:1em;right: 5%;width: 3em;height: 3em;background-color: #eee; border: hidden;z-index: 1000;cursor: pointer;">
+		<a id="sidebutton" style="position: fixed;top:45px;right: 5%;width: 3em;height: 3em;background-color: #eee; border: hidden;z-index: 1000;cursor: pointer;">
 			<i id="sidebar" aria-hidden="true" class="material-icons">arrow_forward</i>
 		</a>
 
@@ -299,8 +302,10 @@
 			Main.onscroll = function () {  
 				if(Main.scrollTop>=200){
 					$("#news_title").addClass("titlemovedown");
+					$("#news_title").addClass("col-md-7");
 				}else{
 					$("#news_title").removeClass("titlemovedown");
+					$("#news_title").removeClass("col-md-7");
 				}
 				document.getElementById("circleprocess").setAttribute("stroke-dasharray",(Main.scrollTop/(Main.scrollHeight-document.body.clientHeight))*1500+" 10000");  
 				 
