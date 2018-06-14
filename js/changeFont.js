@@ -2,28 +2,28 @@
 $("#fontcontrols #small").click(function (event) {
     event.preventDefault();
     $("#news_content h1").animate({
-        "font-size": "24px"
+        "font-size": "1.6em"
     });
     $("#news_content h2").animate({
-        "font-size": "16px"
+        "font-size": "1.4em"
     });
     $("#news_content p").animate({
-        "font-size": "12px",
-        "line-height": "16px"
+        "font-size": "1.2em",
+        "line-height": "1.6em"
     });
 });
 
 $("#fontcontrols #medium").click(function (event) {
     event.preventDefault();
     $("#news_content h1").animate({
-        "font-size": "36px"
+        "font-size": "1.8em"
     });
     $("#news_content h2").animate({
-        "font-size": "24px"
+        "font-size": "1.6em"
     });
     $("#news_content p").animate({
-        "font-size": "14px",
-        "line-height": "20px"
+        "font-size": "1.4em",
+        "line-height": "2em"
     });
 
 });
@@ -31,14 +31,14 @@ $("#fontcontrols #medium").click(function (event) {
 $("#fontcontrols #large").click(function (event) {
     event.preventDefault();
     $("#news_content h1").animate({
-        "font-size": "48px"
+        "font-size": "2em"
     });
     $("#news_content h2").animate({
-        "font-size": "30px"
+        "font-size": "1.8em"
     });
     $("#news_content p").animate({
-        "font-size": "16px",
-        "line-height": "20px"
+        "font-size": "1.6em",
+        "line-height": "2em"
     });
 
 });
@@ -48,3 +48,4 @@ $("#fontcontrols a").click(function () {
     $(this).addClass("selected");
 
 });
+
