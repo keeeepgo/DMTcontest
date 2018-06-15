@@ -52,29 +52,42 @@
     font-size: 75%;
 }
 
-#news_title{
+#news_title {
     font-size: 26px;
     line-height: 36px;
     font-weight: 700;
     margin: 10px 0;
 }
+
 #news_content h1 {
     font-size: 36px;
     font-weight: bold;
 }
 
 #news_content h2 {
-    font-size: 26px;
+    font-size: 20px;
     line-height: 36px;
-    font-weight: 700;
     margin: 10px 0;
-    
 }
 
 #news_content p {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-indent: 2em;
     line-height: 32px;
     font-stretch: normal;
     font-weight: normal;
-    font-size: 14px;
+    font-size: 16px;
     font-family: 微软雅黑, "MicrosoftYaHei", arial, sans-serif;
+}
+
+#news_headimg {
+    height: 200px;
+    width: 100%;
+    background-image: url('../images/news_banner.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-position: 110% 40%;
+    background-size: 50%;
 }

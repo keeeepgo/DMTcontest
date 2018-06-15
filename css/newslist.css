@@ -1,6 +1,6 @@
-
 #newslist {
     margin: 5px;
+    margin-top: 30%;
     padding: 2vh 3vh 3vh;
     background: #353441;
     color: #FFF;
@@ -42,7 +42,7 @@
     padding-left: 0.7em;
 }
 
-#newslist .date{
+#newslist .date {
     flex-shrink: 1;
     font-size: 2vh;
     padding-right: 1em;
@@ -80,4 +80,8 @@
     -webkit-appearance: none;
     cursor: pointer;
     color: #FFF;
+}
+
+#newslist .label {
+    cursor: pointer;
 }

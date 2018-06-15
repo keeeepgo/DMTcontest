@@ -6,48 +6,24 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 	<title>Document</title>
-	<link rel="stylesheet" type="text/css" href="css/news.css" />
 	<link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="css/news.css" />
 	<link rel="stylesheet" type="text/css" href="css/homepage.css" />
+	<link rel="stylesheet" type="text/css" href="css/sideBar.css" />
 	<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
-	<script src="js/jquery-3.3.1.js"></script>
-	<script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-	<script type="text/javascript" src="layui/layui.js"></script>
 	<link rel="stylesheet" href="iconfont/material-icons.css" />
 	<link rel="stylesheet" type="text/css" href="css/vuelist.css" />
 	<link rel="stylesheet" type="text/css" href="css/tagcloud.css" />
+
+	<script src="js/jquery-3.3.1.js"></script>
+	<script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+	<script type="text/javascript" src="layui/layui.js"></script>
 	<script type="text/javascript" src="js/tagcloud.js"></script>
 	<script type="text/javascript" src="js/vue.js"></script>
 	<script type="text/javascript" src="js/echarts.js"></script>
 	<script src="js/macarons.js"></script>
 	<style type="text/css">
-		html,
-		body {
-			height: 100%;
-			overflow: hidden;
-		}
-
-		* {
-			box-sizing: border-box;
-		}
-
-		body {
-			font-family: Raleway, sans-serif;
-			line-height: 1.7;
-			-webkit-perspective-origin: 0% 50%;
-			perspective-origin: 0% 50%;
-			-webkit-perspective: 800px;
-			perspective: 800px;
-			background: #8f9299;
-		}
-
-		* {
-			margin: 0;
-			padding: 0;
-			font-family: Arial, Helvetica, sans-serif;
-			text-decoration: none;
-		}
-
 		.row {
 			box-shadow: 0 0 50px 0 rgba(0, 0, 0, .25);
 		}
@@ -83,303 +59,295 @@
 </head>
 
 <body>
-
-	<body>
-		<div>
-
-		</div>
-		<div id="top" style="z-index:100;width: 100%;height:111px;background-color:white;top:0px;right:0; position:float"></div>
-		<nav class="menu-activea">
-			<h1>Menu</h1>
-			<ul>
-				<li></li>
-				<li>
-					<b>资讯</b>
-				</li>
-				<li>
-					<b>笔记</b>
-				</li>
-				<li>
-					<b>编辑</b>
-				</li>
-				<li>
-					<b>设置</b>
-				</li>
-			</ul>
-		</nav>
-		<main id="Main" style="margin-top:111px">
-			<section id="newspage">
-				<div class="row">
-					<div class="col-md-3">
-						<div class="vuelist" id="newslist" style="margin-top: 30%;">
-							<h1>资讯列表</h1>
-							<div>正在阅读的文章：{{ nowread_newsTitle }}</div>
-							<template v-if="todo.length">
-								<ul>
-									<li stagger="5000" v-bind:class="item.done ? 'done' : ''" v-for="item in todoByStatus">
-										<span class="label" v-bind:aria-label="item.done ? 'Undone' : 'Done'" v-bind:title="item.done ? 'Undone' : 'Done'" v-on:click="markAsDoneOrUndone(item);changeReadNow(item)">{{item.newsTitle}}</span>
-										<div class="actions">
-											<button class="btn-picto" type="button">
-												<i aria-hidden="true" class="material-icons">{{ item.done ? 'check_box' : 'check_box_outline_blank' }}</i>
-											</button>
-
-										</div>
-									</li>
-								</ul>
-								<togglebutton label="移动已看文章" name="movedone" v-on:clicked="movedonetoogle"></togglebutton>
-							</template>
-							<p class="emptylist" v-else="">列表是空的。</p>
-						</div>
-					</div>
-
-					<div class="newsborder col-md-8 " style="padding-right:7rem">
-						<div id="news_title">中国民企自主研制通用飞机GA20今日在江西南昌下线，并完成首次滑跑演示。</div>
-						<hr class="layui-bg-cyan">
-						<div id="news_headimg" style="height: 200px;width:100%;background-image:url('images/news_banner.png');background-repeat:no-repeat;background-attachment:fixed;background-position:center;background-position: 110% 40%; background-size:50%;"></div>
-						<div id="news_content">
-						</div>
-						<div id="score_news_div">
-							<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-								<legend>这篇推送怎么样？评个分吧！
-									<br>
-									<div id="score_news_rate"></div>
-								</legend>
-							</fieldset>
-						</div>
-						<div id="next_news_div" class="col-md-offset-3 col-md-8" style="cursor: pointer;">
-							<i id="next_news_icon" aria-hidden="true" class="material-icons" style="font-size: 3rem;color: #353441">expand_more</i>
-							<span>下一篇：</span>
-							<span id="next_news_title">没有了</span>
-						</div>
-
-					</div>
-					<div id="fontcontrols">
-						<a href="#" id="small">A</a>
-						<a href="#" id="medium" class="selected">A</a>
-						<a href="#" id="large">A</a>
-					</div>
-
-					<div style="position: fixed;top:30%;right: 11%;">
-						<div>
-							<svg id="process_svg" width="70" height="70" viewbox="0 0 500 500">
-								<circle cx="250" cy="250" r="150" stroke-width="20" stroke="#D1D3D7" fill="white"></circle>
-								<circle id="circleprocess" cx="250" cy="250" r="200" stroke-width="10" stroke="#353441" stroke-linecap='square' fill="none"
-								    transform="matrix(0,-1,1,0,0,500)" stroke-dasharray="0 10000"></circle>
-							</svg>
-							<span id="scrolltop_span" style="cursor:pointer;border:0px ;background: transparent; position: absolute;top:15%;right: 30%;z-index: 10000;">
-								<i id="process_icon" aria-hidden="true" class="material-icons" style="font-size: 3rem;color: #353441">arrow_upward</i>
-							</span>
-						</div>
-
-						<div>
-							<svg id="add_waitnews_svg" width="70" height="70" viewbox="0 0 500 500">
-								<circle cx="250" cy="250" r="150" stroke-width="20" stroke="#D1D3D7" fill="white"></circle>
-
-							</svg>
-							<span id="add_waitnews_span" style="cursor:pointer;border:0px ;background: transparent; position: absolute;top:65%;right: 30%;z-index: 10000;">
-								<i aria-hidden="true" class="material-icons" style="font-size: 3rem;color: #353441">add</i>
-							</span>
-						</div>
-					</div>
-				</div>
-			</section>
-		</main>
-		<a id="sidebutton" style="position: fixed;top:45px;right: 5%;width: 3em;height: 3em;background-color: #eee; border: hidden;z-index: 1000;cursor: pointer;">
-			<i id="sidebar" aria-hidden="true" class="material-icons">arrow_forward</i>
-		</a>
-
-		<div id="siderbar" class="container sidemovein" style="background: #ffffff;opacity:0.9;transition: -webkit-transform 300ms ease-out;transition: transform 300ms ease-out;transition: transform 300ms ease-out, -webkit-transform 300ms ease-out;position: fixed;right:0;width: 600px;height: 100%;overflow: scroll; ">
+	<div id="top"></div>
+	<nav class="menu-activea">
+		<h1>Menu</h1>
+		<ul>
+			<li>
+				<b>资讯</b>
+			</li><hr>
+			<li>
+				<b>笔记</b>
+			</li><hr>
+			<li>
+				<b>编辑</b>
+			</li><hr>
+			<li>
+				<b>设置</b>
+			</li><hr>
+		</ul>
+	</nav>
+	<main id="Main">
+		<section id="newspage">
 			<div class="row">
-				<div class="col-md-12">
-					<div class="wrapper" id="wrapper">
-						<div class="tagcloud" id="tagcloud">
-							<a>tag</a>
-						</div>
-					</div>
-					<!--wrapper-->
-					<div class="vuelist" id="taglist">
-						<h1>个人标签列表</h1>
-						<template v-if="tags.length">
-							<ul>
-								<li stagger="5000" v-for="item in tags">
-									<span class="label">{{item.tagContent}}</span>
-									<div class="actions">
-										<button class="btn-picto" type="button" v-on:click="changeReadNow(item)">
-											<img src="images/eye.png" />
-										</button>
-										<button aria-label="Delete" class="btn-picto" title="Delete" type="button" v-on:click="deleteItemFromList(item)">
-											<i aria-hidden="true" class="material-icons">delete</i>
-										</button>
-									</div>
-								</li>
-							</ul>
-						</template>
-						<p class="emptylist" v-else="">列表是空的。</p>
-						<form name="newform" v-on:submit.prevent="addItem">
-							<label for="newtag">添加到个人标签列表</label>
-							<input id="newtag" name="newtag" type="text" v-model="newtag" />
-							<button type="submit" class="material-icons">add</button>
-						</form>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<div class="vuelist" id="waitlist">
-						<h1>待看文章</h1>
-						<div>正在阅读的文章：{{ nowread_newsTitle }}</div>
+				<div class="col-md-3">
+					<div class="vuelist" id="newslist">
+						<h1>资讯列表</h1>
+						<div style="font-size:1.2em;">正在阅读的文章：{{ nowread_newsTitle }}</div>
 						<template v-if="todo.length">
 							<ul>
 								<li stagger="5000" v-bind:class="item.done ? 'done' : ''" v-for="item in todoByStatus">
-									<span class="label">{{item.newsTitle}}</span>
+									<span class="label" v-bind:aria-label="item.done ? 'Undone' : 'Done'" v-bind:title="item.done ? 'Undone' : 'Done'" v-on:click="markAsDoneOrUndone(item);changeReadNow(item)">{{item.newsTitle}}</span>
 									<div class="actions">
-										<button class="btn-picto" type="button" v-on:click="changeReadNow(item)">
-											<img src="images/eye.png" />
-										</button>
-										<button class="btn-picto" type="button" v-bind:aria-label="item.done ? 'Undone' : 'Done'" v-bind:title="item.done ? 'Undone' : 'Done'"
-										    v-on:click="markAsDoneOrUndone(item)">
+										<button class="btn-picto" type="button">
 											<i aria-hidden="true" class="material-icons">{{ item.done ? 'check_box' : 'check_box_outline_blank' }}</i>
-										</button>
-										<button aria-label="Delete" class="btn-picto" title="Delete" type="button" v-on:click="deleteItemFromList(item)">
-											<i aria-hidden="true" class="material-icons">delete</i>
 										</button>
 									</div>
 								</li>
 							</ul>
-							<togglebutton label="移动已看文章" name="movewaitdone" v-on:clicked="movewaitdonetoogle"></togglebutton>
+							<togglebutton label="移动已看文章" name="movedone" v-on:clicked="movedonetoogle"></togglebutton>
 						</template>
 						<p class="emptylist" v-else="">列表是空的。</p>
 					</div>
 				</div>
+
+				<div class="newsborder col-md-8 " style="padding-right:7rem">
+					<div id="news_title">中国民企自主研制通用飞机GA20今日在江西南昌下线，并完成首次滑跑演示。</div>
+					<hr class="layui-bg-cyan">
+					<div id="news_headimg"></div>
+					<div id="news_content">
+					</div>
+					<div id="score_news_div">
+						<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+							<legend>这篇推送怎么样？评个分吧！
+								<br>
+								<div id="score_news_rate"></div>
+							</legend>
+						</fieldset>
+					</div>
+					<div id="next_news_div" class="col-md-offset-3 col-md-8" style="cursor: pointer;">
+						<i id="next_news_icon" aria-hidden="true" class="material-icons" style="font-size: 3rem;color: #353441">expand_more</i>
+						<span>下一篇：</span>
+						<span id="next_news_title">没有了</span>
+					</div>
+
+				</div>
+				<div id="fontcontrols">
+					<a href="#" id="small">A</a>
+					<a href="#" id="medium" class="selected">A</a>
+					<a href="#" id="large">A</a>
+				</div>
+
+				<div id="userIcon">
+					<div>
+						<svg id="process_svg" width="70" height="70" viewbox="0 0 500 500">
+							<circle cx="250" cy="250" r="150" stroke-width="20" stroke="#D1D3D7" fill="white"></circle>
+							<circle id="circleprocess" cx="250" cy="250" r="200" stroke-width="10" stroke="#353441" stroke-linecap='square' fill="none"
+							    transform="matrix(0,-1,1,0,0,500)" stroke-dasharray="0 10000"></circle>
+						</svg>
+						<span id="scrolltop_span" style="cursor:pointer;border:0px ;background: transparent; position: absolute;top:15%;right: 30%;z-index: 10000;">
+							<i id="process_icon" aria-hidden="true" class="material-icons">arrow_upward</i>
+						</span>
+					</div>
+
+					<div>
+						<svg id="add_waitnews_svg" width="70" height="70" viewbox="0 0 500 500">
+							<circle cx="250" cy="250" r="150" stroke-width="20" stroke="#D1D3D7" fill="white"></circle>
+						</svg>
+						<span id="add_waitnews_span" style="cursor:pointer;border:0px ;background: transparent; position: absolute;top:65%;right: 30%;z-index: 10000;">
+							<i aria-hidden="true" class="material-icons">add</i>
+						</span>
+					</div>
+				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<div id="vitality" style="width:100%;height:300px;"></div>
-					<script type="text/javascript" src="js/vitalitychart.js"></script>
+		</section>
+	</main>
+	<a id="sidebutton">
+		<i id="sidebar" aria-hidden="true" class="material-icons">arrow_forward</i>
+	</a>
+
+	<div id="siderbar" class="container sidemovein">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="wrapper" id="wrapper">
+					<div class="tagcloud" id="tagcloud">
+						<a>tag</a>
+					</div>
+				</div>
+				<!--wrapper-->
+				<div class="vuelist" id="taglist">
+					<h1>个人标签列表</h1>
+					<template v-if="tags.length">
+						<ul>
+							<li stagger="5000" v-for="item in tags">
+								<span class="label">{{item.tagContent}}</span>
+								<div class="actions">
+									<button class="btn-picto" type="button" v-on:click="changeReadNow(item)">
+										<img src="images/eye.png" />
+									</button>
+									<button aria-label="Delete" class="btn-picto" title="Delete" type="button" v-on:click="deleteItemFromList(item)">
+										<i aria-hidden="true" class="material-icons">delete</i>
+									</button>
+								</div>
+							</li>
+						</ul>
+					</template>
+					<p class="emptylist" v-else="">列表是空的。</p>
+					<form name="newform" v-on:submit.prevent="addItem">
+						<label for="newtag" style="font-size:1.2em;">添加到个人标签列表</label>
+						<input id="newtag" name="newtag" type="text" v-model="newtag" />
+						<button type="submit" class="material-icons">add</button>
+					</form>
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="vuelist" id="waitlist">
+					<h1>待看文章</h1>
+					<div style="font-size:1.2em;">正在阅读的文章：{{ nowread_newsTitle }}</div>
+					<template v-if="todo.length">
+						<ul>
+							<li stagger="5000" v-bind:class="item.done ? 'done' : ''" v-for="item in todoByStatus">
+								<span class="label">{{item.newsTitle}}</span>
+								<div class="actions">
+									<button class="btn-picto" type="button" v-on:click="changeReadNow(item)">
+										<img src="images/eye.png" />
+									</button>
+									<button class="btn-picto" type="button" v-bind:aria-label="item.done ? 'Undone' : 'Done'" v-bind:title="item.done ? 'Undone' : 'Done'"
+									    v-on:click="markAsDoneOrUndone(item)">
+										<i aria-hidden="true" class="material-icons">{{ item.done ? 'check_box' : 'check_box_outline_blank' }}</i>
+									</button>
+									<button aria-label="Delete" class="btn-picto" title="Delete" type="button" v-on:click="deleteItemFromList(item)">
+										<i aria-hidden="true" class="material-icons">delete</i>
+									</button>
+								</div>
+							</li>
+						</ul>
+						<togglebutton label="移动已看文章" name="movewaitdone" v-on:clicked="movewaitdonetoogle"></togglebutton>
+					</template>
+					<p class="emptylist" v-else="">列表是空的。</p>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div id="vitality" style="width:100%;height:300px;"></div>
+				<script type="text/javascript" src="js/vitalitychart.js"></script>
+			</div>
+		</div>
+	</div>
 
-		<script src="js/news.js"></script>
-		<script src="js/newslist.js"></script>
-		<script src="js/taglist.js"></script>
-		<script src="js/waitlist.js"></script>
-		<script src="js/homepage.js"></script>
-		<script src="js/changeFont.js"></script>
-		<script type="text/javascript">
-			layui.use('layer', function () {
+	<script src="js/news.js"></script>
+	<script src="js/newslist.js"></script>
+	<script src="js/taglist.js"></script>
+	<script src="js/waitlist.js"></script>
+	<script src="js/homepage.js"></script>
+	<script src="js/changeFont.js"></script>
+	<script type="text/javascript">
+		layui.use('layer', function () {
+			var layer = layui.layer;
+			var add_waitnews_tip;
+			$('#add_waitnews_span').mouseenter(function () {
+				add_waitnews_tip = layer.tips('稍后再看', '#add_waitnews_span', {
+					tips: [2, '#000']
+				});
+			});
+
+			$('#add_waitnews_span').mouseout(function () {
 				var layer = layui.layer;
-				var add_waitnews_tip;
-				$('#add_waitnews_span').mouseenter(function () {
-					add_waitnews_tip = layer.tips('稍后再看', '#add_waitnews_span', {
-						tips: [2, '#000']
-					});
-				});
+				layer.close(add_waitnews_tip);
+			});
 
-				$('#add_waitnews_span').mouseout(function () {
-					var layer = layui.layer;
-					layer.close(add_waitnews_tip);
-				});
-
-				$('#scrolltop_span').mouseenter(function () {
-					add_waitnews_tip = layer.tips('回到顶端', '#scrolltop_span', {
-						tips: [2, '#000']
-					});
-				});
-
-				$('#scrolltop_span').mouseout(function () {
-					var layer = layui.layer;
-					layer.close(add_waitnews_tip);
+			$('#scrolltop_span').mouseenter(function () {
+				add_waitnews_tip = layer.tips('回到顶端', '#scrolltop_span', {
+					tips: [2, '#000']
 				});
 			});
 
-			layui.use(['rate'], function () {
-				var rate = layui.rate;
-				rate.render({
-					elem: '#score_news_rate',
-					value: 3,
-					text: true,
-					setText: function (value) { //自定义文本的回调
-						var arrs = {
-							'1': '厌恶  （以后绝对不给你推送这类文章的）',
-							'2': '不喜欢 （以后少给你推送这种文章啦）',
-							'3': '没感觉',
-							'4': '喜欢 （以后多多你推送这种文章咯）',
-							'5': '超爱 （有这类文章的话绝对会推送哦）'
-						};
-						this.span.text(arrs[value] || (value + "星"));
-					}
-				});
+			$('#scrolltop_span').mouseout(function () {
+				var layer = layui.layer;
+				layer.close(add_waitnews_tip);
 			});
+		});
 
-			var showornot = false;
-			$("#sidebutton").click(function () {
-				if (showornot == false) {
-					$("#siderbar").removeClass('sidemovein');
-					$("#siderbar").addClass('sidemoveout');
-					showornot = true;
-				} else {
-					$("#siderbar").removeClass('sidemoveout');
-					$("#siderbar").addClass('sidemovein');
-					showornot = false;
+		layui.use(['rate'], function () {
+			var rate = layui.rate;
+			rate.render({
+				elem: '#score_news_rate',
+				value: 3,
+				text: true,
+				setText: function (value) { //自定义文本的回调
+					var arrs = {
+						'1': '厌恶  （以后绝对不给你推送这类文章的）',
+						'2': '不喜欢 （以后少给你推送这种文章啦）',
+						'3': '没感觉',
+						'4': '喜欢 （以后多多你推送这种文章咯）',
+						'5': '超爱 （有这类文章的话绝对会推送哦）'
+					};
+					this.span.text(arrs[value] || (value + "星"));
 				}
 			});
+		});
+
+		var showornot = false;
+		$("#sidebutton").click(function () {
+			if (showornot == false) {
+				$("#siderbar").removeClass('sidemovein');
+				$("#siderbar").addClass('sidemoveout');
+				showornot = true;
+			} else {
+				$("#siderbar").removeClass('sidemoveout');
+				$("#siderbar").addClass('sidemovein');
+				showornot = false;
+			}
+		});
 
 
-			var Main = document.getElementById("newspage");
-			console.log(Main.scrollHeight);
-			Main.onscroll = function () {
-				if (Main.scrollTop >= 200) {
-					$("#news_title").addClass("titlemovedown");
-					$("#news_title").addClass("col-md-7");
-				} else {
-					$("#news_title").removeClass("titlemovedown");
-					$("#news_title").removeClass("col-md-7");
+		var Main = document.getElementById("newspage");
+		console.log(Main.scrollHeight);
+		Main.onscroll = function () {
+			if (Main.scrollTop >= 200) {
+				$("#news_title").addClass("titlemovedown");
+				$("#news_title").addClass("col-md-7");
+			} else {
+				$("#news_title").removeClass("titlemovedown");
+				$("#news_title").removeClass("col-md-7");
+			}
+			document.getElementById("circleprocess").setAttribute("stroke-dasharray", (Main.scrollTop / (Main.scrollHeight -
+				document.body.clientHeight)) * 1500 + " 10000");
+
+			if (Main.scrollTop / (Main.scrollHeight - document.body.clientHeight) >= 0.9) {
+
+			}
+		}
+
+		var url_FinishedNews = "http://localhost:8080/FinishedNews?userId=" + userId + "&newsId=" + nowread_newsId;;
+
+		function PostFinishedNews() {
+			var xhr = new XMLHttpRequest();
+			var url = url_WaitNewsList;
+			xhr.open("POST", url, true);
+			var this_list = this;
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
+					waitlist.refreshList();
 				}
-				document.getElementById("circleprocess").setAttribute("stroke-dasharray", (Main.scrollTop / (Main.scrollHeight -
-					document.body.clientHeight)) * 1500 + " 10000");
+			};
+			xhr.send();
+		}
 
-				if (Main.scrollTop / (Main.scrollHeight - document.body.clientHeight) >= 0.9) {
+		//侧边按钮
+		document.getElementById("scrolltop_span").onclick = function () {
+			Main.scrollTo(0, 0);
+		}
 
+		//收入待看文章列表
+		var userId = 1;
+		var url_WaitNewsList = "http://localhost:8080/WaitNewsList?userId=" + userId + "&newsId=" + nowread_newsId;
+		document.getElementById("add_waitnews_span").onclick = function () {
+			var xhr = new XMLHttpRequest();
+			var url = url_WaitNewsList;
+			xhr.open("POST", url, true);
+			var this_list = this;
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
+					waitlist.refreshList();
 				}
-			}
-
-			var url_FinishedNews = "http://localhost:8080/FinishedNews?userId=" + userId + "&newsId=" + nowread_newsId;;
-
-			function PostFinishedNews() {
-				var xhr = new XMLHttpRequest();
-				var url = url_WaitNewsList;
-				xhr.open("POST", url, true);
-				var this_list = this;
-				xhr.onreadystatechange = function () {
-					if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
-						waitlist.refreshList();
-					}
-				};
-				xhr.send();
-			}
-
-			//侧边按钮
-			document.getElementById("scrolltop_span").onclick = function () {
-				Main.scrollTo(0, 0);
-			}
-
-			//收入待看文章列表
-			var userId = 1;
-			var url_WaitNewsList = "http://localhost:8080/WaitNewsList?userId=" + userId + "&newsId=" + nowread_newsId;
-			document.getElementById("add_waitnews_span").onclick = function () {
-				var xhr = new XMLHttpRequest();
-				var url = url_WaitNewsList;
-				xhr.open("POST", url, true);
-				var this_list = this;
-				xhr.onreadystatechange = function () {
-					if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
-						waitlist.refreshList();
-					}
-				};
-				xhr.send();
-			}
-		</script>
-	</body>
+			};
+			xhr.send();
+		}
+	</script>
+</body>
 
 </html>
