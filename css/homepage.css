@@ -32,7 +32,7 @@ body {
     background-color: white;
     top: 0px;
     right: 0;
-    position: float
+    position: float;
 }
 
 nav,
@@ -91,6 +91,7 @@ nav h1:hover {
 nav ul {
     margin: 0;
     padding: 0;
+    margin-top: 111px;
 }
 
 nav li {
@@ -233,4 +234,7 @@ section p {
 #add_waitnews_span i {
     font-size: 3rem;
     color: #353441;
+}
+.menu-activea h1{
+    top: 20px;
 }

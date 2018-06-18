@@ -102,7 +102,7 @@
 				<div class="col-md-3">
 					<div class="vuelist" id="newslist">
 						<h1>资讯列表</h1>
-						<div style="font-size:1.2em;">正在阅读的文章：{{ nowread_newsTitle }}</div>
+						<div style="font-size:1.2em; padding-top:5px">正在阅读的文章：{{ nowread_newsTitle }}</div>
 						<template v-if="todo.length">
 							<ul>
 								<li stagger="5000" v-bind:class="item.done ? 'done' : ''" v-for="item in todoByStatus">
@@ -188,9 +188,7 @@
 							<li stagger="5000" v-for="item in tags">
 								<span class="label">{{item.tagContent}}</span>
 								<div class="actions">
-									<button class="btn-picto" type="button" v-on:click="changeReadNow(item)">
-										<img src="images/eye.png" />
-									</button>
+
 									<button aria-label="Delete" class="btn-picto" title="Delete" type="button" v-on:click="deleteItemFromList(item)">
 										<i aria-hidden="true" class="material-icons">delete</i>
 									</button>
@@ -211,7 +209,7 @@
 			<div class="col-md-12">
 				<div class="vuelist" id="waitlist">
 					<h1>待看文章</h1>
-					<div style="font-size:1.2em;">正在阅读的文章：{{ nowread_newsTitle }}</div>
+					<div style="font-size:1.2em;padding-top:5px;">正在阅读的文章：{{ nowread_newsTitle }}</div>
 					<template v-if="todo.length">
 						<ul>
 							<li stagger="5000" v-bind:class="item.done ? 'done' : ''" v-for="item in todoByStatus">
