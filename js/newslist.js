@@ -1,39 +1,49 @@
 
 var nowread_newsId = 1;
-var nowread_newsTitle = "";
 var next_newsId = 2;
 var next_newsTitle = "";
+var read_waitnew = false;
 
 
-Vue.component('togglebutton', {
-    props: ['label', 'name'],
-    template: `<div class="togglebutton-wrapper" v-bind:class="isactive ? 'togglebutton-checked' : ''">
-    <label v-bind:for="name">
-    <span class="togglebutton-label">{{ label }}</span>
-    <span class="tooglebutton-box"></span>
-    </label>
-    <input v-bind:id="name" type="checkbox" v-bind:name="name" v-model="isactive" v-on:change="onToogle">
-    </div>`,
-    model: {
-        prop: 'checked',
-        event: 'change'
-    },
-    data: function() {
-        return {
-            isactive: false
-        }
-    },
-    methods: {
-        onToogle: function() {
-            this.$emit('clicked', this.isactive)
-        }
-    }
-});
+var userId=1;
+var url_RecommendNewsList = "http://localhost:8080/RecommendNewsList?userId="+userId;
 
 var url_defalut_img = "images/news_banner.png";
 var url_News = "http://localhost:8080/News?newsId=";
+var url_NewsTagList = "http://localhost:8080/NewsTagList";
+function refreshNextNews(nowId){
+    var find_next_flag = false;
+    if(read_waitnew == false){
+        for(var i in newslist.todo){
+            if(find_next_flag == true){
+                next_newsId = newslist.todo[i].newsId;
+                next_newsTitle = newslist.todo[i].newsTitle;
+                find_next_flag = false;
+            }
+            if(newslist.todo[i].newsId==nowId){
+                find_next_flag = true;
+            }
+        }
+    }else{
+        for(var i in waitlist.todo){
+            if(find_next_flag == true){
+                next_newsId = waitlist.todo[i].newsId;
+                next_newsTitle = waitlist.todo[i].newsTitle;
+                find_next_flag = false;
+            }
+            if(waitlist.todo[i].newsId==nowId){
+                find_next_flag = true;
+            }
+        }
+    }
 
-function refreshNews(nowId,nextId,nextTitle){
+    if(find_next_flag == true){
+        next_newsId = null;
+        next_newsTitle = "没有了";
+    }
+}
+
+function refreshNews(nowId){
     var xhr = new XMLHttpRequest();
     var url = url_News+nowId;
     xhr.open("GET", url, true);
@@ -41,11 +51,16 @@ function refreshNews(nowId,nextId,nextTitle){
         if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
             var str = "";
             str = xhr.responseText;
- 
+
+            refreshNextNews(nowId);
+            
             newsContent = JSON.parse(str);
+            nowread_newsId = nowId;
+            newslist.nowread_newsTitle = newsContent['newsTitle'];
+            waitlist.nowread_newsTitle = newsContent['newsTitle']; 
             $("#news_title").html(newsContent['newsTitle']);
             $("#news_content").html(newsContent['newsContent']);
-            $("#next_news_title").html(nextTitle);
+            $("#next_news_title").html(next_newsTitle);
             //图片数小于2才改
             //console.log($("#news_content").find("img") );
             if($("#news_content").find("img").length >= 2){
@@ -57,50 +72,45 @@ function refreshNews(nowId,nextId,nextTitle){
             }else{
                 $('#news_headimg').css('background-image',"url('" + url_defalut_img + "')" );
             }
+
+            $.ajax({
+				url: url_NewsTagList,
+				type: "GET",
+				data: "newsId=" + nowread_newsId,
+				
+				success: function (jsonstr) {
+                    var newstags = JSON.parse(jsonstr);
+                    $(".newstag").remove();
+                    for(i=0;i<newstags.length;i++){
+                        $("#news_tags").after("<span class='newstag'>"+newstags[i]["tagContent"]+"</span>");
+                    }
+				},
+				error: function (xhr, str) {
+					console.log(xhr);
+					console.log(str);
+				}
+			});
             
         }
     };
     xhr.send();
+
 }
 
-var userId=1;
-var url_RecommendNewsList = "http://localhost:8080/RecommendNewsList?userId="+userId;
-var newslistdata = [];
 var newslist = new Vue({
     el: '#newslist',
     data: {
         sortByStatus: false,
-        todo: newslistdata,
-        nowread_newsId: nowread_newsId,
-        nowread_newsTitle: nowread_newsTitle
+        todo: [],
+        nowread_newsTitle: ""
     },
     methods: {
         markAsDoneOrUndone: function(item) {
             item.done = !item.done;
         },
         changeReadNow: function(item) {
-            this.nowread_newsId = item.newsId;
-            nowread_newsId = item.newsId;
-            //console.log(nowread_newsId);
-            this.nowread_newsTitle = item.newsTitle;
-            nowread_newsTitle = item.newsTitle;
-            var find_next_flag = false;
-            for(var i in this.todo){
-                if(find_next_flag == true){
-                    next_newsId = this.todo[i].newsId;
-                    next_newsTitle = this.todo[i].newsTitle;
-                    find_next_flag = false;
-                }
-                if(this.todo[i].newsId==nowread_newsId){
-                    find_next_flag = true;
-                }
-            }
-
-            if(find_next_flag == true){
-                next_newsId = null;
-            }
-
-            refreshNews(nowread_newsId,next_newsId,next_newsTitle);
+            read_waitnew = false;
+            refreshNews(item.newsId);
         },
         movedonetoogle: function(active) {
             this.sortByStatus = active;
@@ -116,7 +126,7 @@ var newslist = new Vue({
                     
                     var str = "";
                     str = xhr.responseText;
-                    newslistdata = JSON.parse(str);
+                    var newslistdata = JSON.parse(str);
                     newslistdata.forEach(function (element, index, array) {
                         // element: 指向当前元素的值
                         // index: 指向当前索引
@@ -125,7 +135,6 @@ var newslist = new Vue({
                         element.done = false;
                     });
                     this_list.todo = newslistdata;
-                    console.log(this_list.todo);
                 }
             };
             xhr.send();

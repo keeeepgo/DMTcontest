@@ -1,6 +1,5 @@
 
 var nowread_newsId = 1;
-var nowread_newsTitle ="";
 
 Vue.component('togglebutton', {
     props: ['label', 'name'],
@@ -33,11 +32,8 @@ var waitlist = new Vue({
     el: '#waitlist',
     data: {
         sortByStatus: false,
-        todo: [
-            { newsId: "", newsTitle: "暂无待看文章", done: true },
-        ],
-        nowread_newsId: nowread_newsId,
-        nowread_newsTitle : nowread_newsTitle
+        todo: [],
+        nowread_newsTitle : ""
     },
     methods: {
         markAsDoneOrUndone: function(item) {
@@ -48,10 +44,8 @@ var waitlist = new Vue({
             this.todo.splice(index, 1);
         },
         changeReadNow: function(item) {
-            this.nowread_newsId = item.newsId;
-            nowread_newsId = item.newsId;
-            this.nowread_newsTitle = item.newsTitle;
-            nowread_newsTitle = item.newsTitle;
+            read_waitnew = ture;
+            refreshNews(item.newsId);
         },
         movewaitdonetoogle: function(active) {
             this.sortByStatus = active;
@@ -66,7 +60,7 @@ var waitlist = new Vue({
                 if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
                     var str = "";
                     str = xhr.responseText;
-                    newslistdata = JSON.parse(str);
+                    var newslistdata = JSON.parse(str);
                     newslistdata.forEach(function (element, index, array) {
                         // element: 指向当前元素的值
                         // index: 指向当前索引
@@ -75,7 +69,6 @@ var waitlist = new Vue({
                         element.done = false;
                     });
                     this_list.todo = newslistdata;
-                    console.log(str);
                 }
             };
             xhr.send();

@@ -186,9 +186,16 @@ section p {
 .label {
     color: #000;
     font-size: 1em;
+    cursor: pointer;
+    white-space:normal;
+    line-height: 2rem;
+    text-align: left;
+}
+.label:hover{
+    color:#8f9299;
 }
 
-#sidebar {
+#sidebar_i {
     text-align: center;
     line-height: 1.5;
     padding-left: 8px;

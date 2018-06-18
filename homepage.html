@@ -5,7 +5,7 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-	<title>Document</title>
+	<title>浏览新闻页</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="css/news.css" />
 	<link rel="stylesheet" type="text/css" href="css/homepage.css" />
@@ -55,6 +55,13 @@
 			top: 10px;
 			background-color: white;
 		}
+
+		.newstag{
+			margin: 5px;
+			padding: 5px 10px 5px 10px;
+			border:1px solid #e9e9e9;
+			border-radius:25px;
+		}
 	</style>
 </head>
 
@@ -64,17 +71,29 @@
 		<h1>Menu</h1>
 		<ul>
 			<li>
-				<b>资讯</b>
-			</li><hr>
+				<b>
+					<a href="homepage.html">资讯</a>
+				</b>
+			</li>
+			<hr>
 			<li>
-				<b>笔记</b>
-			</li><hr>
+				<b>
+					<a href="notelists.html">笔记</a>
+				</b>
+			</li>
+			<hr>
 			<li>
-				<b>编辑</b>
-			</li><hr>
+				<b>
+					<a href="editnote.html">编辑</a>
+				</b>
+			</li>
+			<hr>
 			<li>
-				<b>设置</b>
-			</li><hr>
+				<b>
+					<a href="weboption.html">设置</a>
+				</b>
+			</li>
+			<hr>
 		</ul>
 	</nav>
 	<main id="Main">
@@ -88,11 +107,6 @@
 							<ul>
 								<li stagger="5000" v-bind:class="item.done ? 'done' : ''" v-for="item in todoByStatus">
 									<span class="label" v-bind:aria-label="item.done ? 'Undone' : 'Done'" v-bind:title="item.done ? 'Undone' : 'Done'" v-on:click="markAsDoneOrUndone(item);changeReadNow(item)">{{item.newsTitle}}</span>
-									<div class="actions">
-										<button class="btn-picto" type="button">
-											<i aria-hidden="true" class="material-icons">{{ item.done ? 'check_box' : 'check_box_outline_blank' }}</i>
-										</button>
-									</div>
 								</li>
 							</ul>
 							<togglebutton label="移动已看文章" name="movedone" v-on:clicked="movedonetoogle"></togglebutton>
@@ -102,10 +116,12 @@
 				</div>
 
 				<div class="newsborder col-md-8 " style="padding-right:7rem">
-					<div id="news_title">中国民企自主研制通用飞机GA20今日在江西南昌下线，并完成首次滑跑演示。</div>
+					<div id="news_title">文章标题</div>
+					<div id="news_tags"><span class="newstag">标签</span></div>
 					<hr class="layui-bg-cyan">
 					<div id="news_headimg"></div>
 					<div id="news_content">
+						文章内容
 					</div>
 					<div id="score_news_div">
 						<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
@@ -153,10 +169,10 @@
 		</section>
 	</main>
 	<a id="sidebutton">
-		<i id="sidebar" aria-hidden="true" class="material-icons">arrow_forward</i>
+		<i id="sidebar_i" aria-hidden="true" class="material-icons">arrow_forward</i>
 	</a>
 
-	<div id="siderbar" class="container sidemovein">
+	<div id="sidebar" class="container sidemovein">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="wrapper" id="wrapper">
@@ -235,6 +251,7 @@
 	<script src="js/homepage.js"></script>
 	<script src="js/changeFont.js"></script>
 	<script type="text/javascript">
+		//侧边按钮提示
 		layui.use('layer', function () {
 			var layer = layui.layer;
 			var add_waitnews_tip;
@@ -261,6 +278,7 @@
 			});
 		});
 
+		//资讯评分
 		layui.use(['rate'], function () {
 			var rate = layui.rate;
 			rate.render({
@@ -276,27 +294,46 @@
 						'5': '超爱 （有这类文章的话绝对会推送哦）'
 					};
 					this.span.text(arrs[value] || (value + "星"));
+				},
+				choose: function (value) {
+					var url_FinishedNews = "http://localhost:8080/FinishedNews";
+					$.ajax({
+						url: url_FinishedNews,
+						type: "POST",
+						data: "userId=" + userId + "&newsId=" + nowread_newsId + "&score=" + value,
+						xhrFields: {
+							withCredentials: true // 设置运行跨域操作  
+						},
+						success: function () {
+							alert("评分上传成功！");
+						},
+						error: function (xhr, str) {
+							console.log(xhr);
+							console.log(str);
+						}
+					});
 				}
 			});
 		});
 
+		//侧边栏弹出特效
 		var showornot = false;
 		$("#sidebutton").click(function () {
 			if (showornot == false) {
-				$("#siderbar").removeClass('sidemovein');
-				$("#siderbar").addClass('sidemoveout');
+				$("#sidebar").removeClass('sidemovein');
+				$("#sidebar").addClass('sidemoveout');
 				showornot = true;
 			} else {
-				$("#siderbar").removeClass('sidemoveout');
-				$("#siderbar").addClass('sidemovein');
+				$("#sidebar").removeClass('sidemoveout');
+				$("#sidebar").addClass('sidemovein');
 				showornot = false;
 			}
 		});
 
-
+		//滚动条移动触发标题移位，进度条改变
 		var Main = document.getElementById("newspage");
 		console.log(Main.scrollHeight);
-		Main.onscroll = function () {
+		$("#newspage").scroll(function () {
 			if (Main.scrollTop >= 200) {
 				$("#news_title").addClass("titlemovedown");
 				$("#news_title").addClass("col-md-7");
@@ -304,49 +341,46 @@
 				$("#news_title").removeClass("titlemovedown");
 				$("#news_title").removeClass("col-md-7");
 			}
-			document.getElementById("circleprocess").setAttribute("stroke-dasharray", (Main.scrollTop / (Main.scrollHeight -
-				document.body.clientHeight)) * 1500 + " 10000");
+			$("#circleprocess").attr("stroke-dasharray", ($(this).prop("scrollTop") / ($(this).prop("scrollHeight") -
+				$(document).height())) * 1500 + " 10000");
 
-			if (Main.scrollTop / (Main.scrollHeight - document.body.clientHeight) >= 0.9) {
+		});
 
-			}
-		}
-
-		var url_FinishedNews = "http://localhost:8080/FinishedNews?userId=" + userId + "&newsId=" + nowread_newsId;;
-
-		function PostFinishedNews() {
-			var xhr = new XMLHttpRequest();
-			var url = url_WaitNewsList;
-			xhr.open("POST", url, true);
-			var this_list = this;
-			xhr.onreadystatechange = function () {
-				if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
-					waitlist.refreshList();
-				}
-			};
-			xhr.send();
-		}
+		$("#next_news_div").click(function () {
+			refreshNews(next_newsId);
+			$("#newspage").animate({
+				scrollTop: 0
+			}, 500);
+		});
 
 		//侧边按钮
-		document.getElementById("scrolltop_span").onclick = function () {
-			Main.scrollTo(0, 0);
-		}
+		$("#scrolltop_span").click(function () {
+			$("#newspage").animate({
+				scrollTop: 0
+			}, 500);
+		});
 
 		//收入待看文章列表
 		var userId = 1;
-		var url_WaitNewsList = "http://localhost:8080/WaitNewsList?userId=" + userId + "&newsId=" + nowread_newsId;
-		document.getElementById("add_waitnews_span").onclick = function () {
-			var xhr = new XMLHttpRequest();
-			var url = url_WaitNewsList;
-			xhr.open("POST", url, true);
-			var this_list = this;
-			xhr.onreadystatechange = function () {
-				if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
+		var url_WaitNewsList = "http://localhost:8080/WaitNewsList";
+		$("#add_waitnews_span").click(function () {
+			$.ajax({
+				url: url_WaitNewsList,
+				type: "POST",
+				data: "userId=" + userId + "&newsId=" + nowread_newsId,
+				xhrFields: {
+					withCredentials: true // 设置运行跨域操作  
+				},
+				success: function () {
 					waitlist.refreshList();
+				},
+				error: function (xhr, str) {
+					console.log(xhr);
+					console.log(str);
 				}
-			};
-			xhr.send();
-		}
+			});
+
+		});
 	</script>
 </body>
 
