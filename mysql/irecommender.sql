@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50610
 File Encoding         : 65001
 
-Date: 2018-06-13 12:34:53
+Date: 2018-06-20 10:44:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -431,12 +431,15 @@ CREATE TABLE `note` (
   `noteDate` date DEFAULT NULL,
   `noteContent` text,
   PRIMARY KEY (`noteId`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of note
 -- ----------------------------
-INSERT INTO `note` VALUES ('1', '1', '2018-06-09', '哈哈哈');
+INSERT INTO `note` VALUES ('1', '1', '2018-06-09', '>哈哈哈');
+INSERT INTO `note` VALUES ('3', '1', '2018-05-02', '**啊啊**');
+INSERT INTO `note` VALUES ('4', '1', '2018-05-02', '当前，全党正在大兴调研之风，然而少数地方的调查研究看起来有模有样、有声有色，干部群众却大喝倒彩、怨声载道，原因就在于形式主义作祟。有人批评说，调查研究本应是实打实的“纪录片”，却被弄成了虚对虚的“舞台剧”。');
+INSERT INTO `note` VALUES ('5', '1', '2018-05-03', '龙华');
 
 -- ----------------------------
 -- Table structure for read_record
@@ -445,7 +448,7 @@ DROP TABLE IF EXISTS `read_record`;
 CREATE TABLE `read_record` (
   `userId` bigint(20) NOT NULL,
   `newsId` bigint(20) NOT NULL,
-  `grade` int(2) DEFAULT NULL,
+  `grade` int(2) NOT NULL,
   `readStatus` int(2) NOT NULL,
   PRIMARY KEY (`userId`,`newsId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -453,8 +456,17 @@ CREATE TABLE `read_record` (
 -- ----------------------------
 -- Records of read_record
 -- ----------------------------
-INSERT INTO `read_record` VALUES ('1', '1', '0', '0');
-INSERT INTO `read_record` VALUES ('1', '2', '0', '2');
+INSERT INTO `read_record` VALUES ('1', '1', '0', '1');
+INSERT INTO `read_record` VALUES ('1', '2', '5', '1');
+INSERT INTO `read_record` VALUES ('1', '3', '4', '1');
+INSERT INTO `read_record` VALUES ('1', '4', '3', '1');
+INSERT INTO `read_record` VALUES ('1', '5', '3', '2');
+INSERT INTO `read_record` VALUES ('1', '6', '4', '2');
+INSERT INTO `read_record` VALUES ('1', '7', '4', '2');
+INSERT INTO `read_record` VALUES ('1', '8', '5', '2');
+INSERT INTO `read_record` VALUES ('1', '9', '3', '2');
+INSERT INTO `read_record` VALUES ('1', '10', '4', '2');
+INSERT INTO `read_record` VALUES ('1', '11', '4', '2');
 
 -- ----------------------------
 -- Table structure for tag
@@ -464,7 +476,7 @@ CREATE TABLE `tag` (
   `tagId` bigint(20) NOT NULL AUTO_INCREMENT,
   `tagContent` varchar(20) NOT NULL,
   PRIMARY KEY (`tagId`)
-) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tag
@@ -474,11 +486,6 @@ INSERT INTO `tag` VALUES ('2', '世界杯');
 INSERT INTO `tag` VALUES ('3', 'NBA');
 INSERT INTO `tag` VALUES ('4', 'Unity');
 INSERT INTO `tag` VALUES ('5', 'Valkan');
-INSERT INTO `tag` VALUES ('33', '辣条');
-INSERT INTO `tag` VALUES ('34', '里昂');
-INSERT INTO `tag` VALUES ('35', '白痴');
-INSERT INTO `tag` VALUES ('36', '阿斯达');
-INSERT INTO `tag` VALUES ('37', '白茶');
 
 -- ----------------------------
 -- Table structure for user
@@ -513,6 +520,8 @@ CREATE TABLE `user_news_rec` (
 -- ----------------------------
 INSERT INTO `user_news_rec` VALUES ('1', '1', '10.0000000000');
 INSERT INTO `user_news_rec` VALUES ('1', '2', '5.0000000000');
+INSERT INTO `user_news_rec` VALUES ('1', '3', '7.0000000000');
+INSERT INTO `user_news_rec` VALUES ('1', '4', '6.2000000000');
 
 -- ----------------------------
 -- Table structure for user_tag
@@ -533,11 +542,7 @@ INSERT INTO `user_tag` VALUES ('1', '2', '0.7000000000');
 INSERT INTO `user_tag` VALUES ('1', '3', '0.8000000000');
 INSERT INTO `user_tag` VALUES ('1', '4', '0.1000000000');
 INSERT INTO `user_tag` VALUES ('1', '5', '0.0000000000');
-INSERT INTO `user_tag` VALUES ('1', '33', '0.0000000000');
-INSERT INTO `user_tag` VALUES ('1', '34', '0.0000000000');
-INSERT INTO `user_tag` VALUES ('1', '35', '0.0000000000');
-INSERT INTO `user_tag` VALUES ('1', '36', '0.0000000000');
-INSERT INTO `user_tag` VALUES ('1', '37', '0.0000000000');
+INSERT INTO `user_tag` VALUES ('1', '41', '0.1000000000');
 
 -- ----------------------------
 -- Table structure for vitality
@@ -554,9 +559,3 @@ CREATE TABLE `vitality` (
 -- Records of vitality
 -- ----------------------------
 INSERT INTO `vitality` VALUES ('1', '2018-06-09', '3');
-DROP TRIGGER IF EXISTS `user_insert_tag`;
-DELIMITER ;;
-CREATE TRIGGER `user_insert_tag` AFTER INSERT ON `tag` FOR EACH ROW BEGIN INSERT INTO user_tag(userId,tagId,weight)
-VALUES(1,NEW.tagId,0); END
-;;
-DELIMITER ;
