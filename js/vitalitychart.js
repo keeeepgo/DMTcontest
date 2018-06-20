@@ -1,18 +1,22 @@
 var myChart = echarts.init(document.getElementById('vitality'), 'macarons');
-// 模拟数据
-function getVirtulData(year) {
-    year = year || '2018';
-    var date = +echarts.number.parseDate(year + '-01-01');
-    var end = +echarts.number.parseDate((+year + 1) + '-01-01');
-    var dayTime = 3600 * 24 * 1000;
-    var data = [];
-    for (var time = date; time < end; time += dayTime) {
-        data.push([
-            echarts.format.formatTime('yyyy-MM-dd', time),
-            Math.floor(Math.random() * 50)
-        ]);
-    }
-    return data;
+
+var userId = 1;
+var url_VitalityChart = "http://localhost:8080/VitalityChart"
+function getVitalityChartData() {
+    $.ajax({
+        url: url_VitalityChart,
+        type: "GET",
+        data: "userId="+userId,
+        success: function(str){
+            var format_getdata = [];
+            var getdata = JSON.parse(str);
+            for(i=0;i<getdata.length;i++){
+                format_getdata[i] = [getdata[i]["date"],getdata[i]["newsNumber"]];
+            }
+            var option = {series:{data:format_getdata}}
+            myChart.setOption(option);
+        }
+    });  
 }
 
 option = {
@@ -47,7 +51,7 @@ option = {
     series: {
         type: 'heatmap',
         coordinateSystem: 'calendar',
-        data: getVirtulData(2018),
+        data: [],
         itemStyle: {
             normal: {
                 color: '#aaa'
@@ -57,3 +61,4 @@ option = {
 };
 
 myChart.setOption(option);
+getVitalityChartData();

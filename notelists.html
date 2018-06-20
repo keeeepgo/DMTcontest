@@ -124,7 +124,6 @@
 
     <script>
         $(function () {
-
             layui.use(['form', 'layedit'], function () {
                 var form = layui.form,
                     layedit = layui.layedit;
@@ -137,45 +136,6 @@
                 });
 
             });
-
-            function toggleThisDate(thisDate) {
-                var all_notelist_li = $.extend(true, {}, $("#notelist_ul").children("li"));
-                var temp = $(thisDate).text();
-                all_notelist_li.each(function () {
-                    if ($(this).children(".noteDate_span").text() == temp) {
-                        $(this).children("span").not(".notelist_DateTitle").slideToggle("slow");;
-                    }
-                });
-            }
-
-            function appendDateLabel() {
-                var all_noteDate_span = $("#notelist_ul").find(".noteDate_span");
-                var all_noteDate_span = $.extend(true, {}, $("#notelist_ul").find(".noteDate_span"));
-                var temp = all_noteDate_span["0"]["innerText"];
-                $(all_noteDate_span[0]).prev().before(
-                    "<span class='notelist_DateTitle' style='width:90%;cursor:pointer'>" + temp +
-                    "</span><i class='material-icons' style='font-size: 3rem;color: #353441;width:10%'>expand_more</i>"
-                );
-                all_noteDate_span.each(function () {
-                    if ($(this).text() != temp) {
-                        temp = $(this).text();
-                        $(this).prev().before(
-                            "<span class='notelist_DateTitle' style='width:90%;cursor:pointer'>" +
-                            temp +
-                            "</span><i class='material-icons' style='font-size: 3rem;color: #353441;width:10%'>expand_more</i>"
-                        );
-                    }
-                });
-
-                $(".notelist_DateTitle").click(function () {
-                    console.log("dsada");
-                    toggleThisDate(this);
-                });
-            }
-
-
-
-
         });
     </script>
 </body>

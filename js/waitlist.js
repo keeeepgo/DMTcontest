@@ -44,7 +44,7 @@ var waitlist = new Vue({
             this.todo.splice(index, 1);
         },
         changeReadNow: function(item) {
-            read_waitnew = ture;
+            read_waitnew = true;
             refreshNews(item.newsId);
         },
         movewaitdonetoogle: function(active) {

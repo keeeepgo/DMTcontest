@@ -35,6 +35,16 @@
             width: 100%;
         }
 
+        #toolbar button{
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        #toolbar select{
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
         #container {
             overflow: auto;
             position: relative;
@@ -133,7 +143,7 @@
                 <div id='toolbar'>
                     <form class="layui-form" action="">
                         <div class="layui-form-item">
-                            <button type="button" class="layui-btn" style="background: #000;">上传</button>
+                            <button type="button" class="layui-btn" style="background: #000;" id="upload_note">上传</button>
                             <button type="button" class="layui-btn layui-btn-primary" id="insert_bold">加粗</button>
                             <button type="button" class="layui-btn layui-btn-primary" id="insert_italic">斜体</button>
                             <button type="button" class="layui-btn layui-btn-primary" id="insert_quote">引用</button>
@@ -206,9 +216,9 @@
                 </div>
                 <div id='container' style="height: 400px;">
                     <div id='editor-column' class='pull-left'>
-                        <div id='panel-editor'>
+                        <div id='panel-editor' >
                             <!--编辑区-->
-                            <div class="editor-content" id="mdeditor"></div>
+                            <div class="editor-content" id="mdeditor" ></div>
                         </div>
                     </div>
                     <div id='preview-column' class='pull-right'>
@@ -249,10 +259,25 @@
             });
 
             $("#mdeditor").keyup(function () {
-
                 $("#preview").html(marked(acen_edit.getValue()));
 
             });
+            
+            var userId = 1;
+            var url_NoteList = "http://localhost:8080/NoteList";
+            $("#upload_note").click(function(){
+                var today = new Date();
+                today_str = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDay();
+                console.log(today_str);
+                $.ajax({
+                    url: url_NoteList,
+                    type: "POST",
+                    data: "userId="+userId+"&noteDate="+today_str+"&noteContent="+acen_edit.getValue(),
+                    success: function(xhr){
+                        console.log(xhr["responseContent"]);
+                    }
+                });
+            })
 
             layui.use(['form', 'layedit'], function () {
                 var form = layui.form,
