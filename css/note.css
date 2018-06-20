@@ -80,14 +80,3 @@
     font-size: 16px;
     font-family: 微软雅黑, "MicrosoftYaHei", arial, sans-serif;
 }
-
-#note_headimg {
-    height: 200px;
-    width: 100%;
-    background-image: url('../images/news_banner.png');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    background-position: 110% 40%;
-    background-size: 50%;
-}

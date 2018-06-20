@@ -213,22 +213,14 @@
 					<template v-if="todo.length">
 						<ul>
 							<li stagger="5000" v-bind:class="item.done ? 'done' : ''" v-for="item in todoByStatus">
-								<span class="label">{{item.newsTitle}}</span>
+								<span class="label" v-on:click="changeReadNow(item);markAsDoneOrUndone(item)">{{item.newsTitle}}</span>
 								<div class="actions">
-									<button class="btn-picto" type="button" v-on:click="changeReadNow(item)">
-										<img src="images/eye.png" />
-									</button>
-									<button class="btn-picto" type="button" v-bind:aria-label="item.done ? 'Undone' : 'Done'" v-bind:title="item.done ? 'Undone' : 'Done'"
-									    v-on:click="markAsDoneOrUndone(item)">
-										<i aria-hidden="true" class="material-icons">{{ item.done ? 'check_box' : 'check_box_outline_blank' }}</i>
-									</button>
 									<button aria-label="Delete" class="btn-picto" title="Delete" type="button" v-on:click="deleteItemFromList(item)">
 										<i aria-hidden="true" class="material-icons">delete</i>
 									</button>
 								</div>
 							</li>
 						</ul>
-						<togglebutton label="移动已看文章" name="movewaitdone" v-on:clicked="movewaitdonetoogle"></togglebutton>
 					</template>
 					<p class="emptylist" v-else="">列表是空的。</p>
 				</div>
@@ -298,10 +290,7 @@
 					$.ajax({
 						url: url_FinishedNews,
 						type: "POST",
-						data: "userId=" + userId + "&newsId=" + nowread_newsId + "&score=" + value,
-						xhrFields: {
-							withCredentials: true // 设置运行跨域操作  
-						},
+						data: "userId=" + userId + "&newsId=" + nowread_newsId + "&grade=" + value,
 						success: function () {
 							alert("评分上传成功！");
 						},
@@ -343,7 +332,8 @@
 				$(document).height())) * 1500 + " 10000");
 
 		});
-
+		
+		//切换下个新闻
 		$("#next_news_div").click(function () {
 			refreshNews(next_newsId);
 			$("#newspage").animate({
@@ -366,11 +356,20 @@
 				url: url_WaitNewsList,
 				type: "POST",
 				data: "userId=" + userId + "&newsId=" + nowread_newsId,
-				xhrFields: {
-					withCredentials: true // 设置运行跨域操作  
-				},
 				success: function () {
+					$("#add_waitnews_span").animate(
+						{
+							left:'+=250px'
+						},
+						'slow',function(){$("#add_waitnews_span").hide();}
+					);
+					$("#add_waitnews_span").animate(
+						{
+							left:'-=250px'
+						}
+					);
 					waitlist.refreshList();
+					
 				},
 				error: function (xhr, str) {
 					console.log(xhr);

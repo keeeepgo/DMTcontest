@@ -54,6 +54,8 @@ function refreshNews(nowId){
 
             refreshNextNews(nowId);
             
+            $("#add_waitnews_span").show();
+
             newsContent = JSON.parse(str);
             nowread_newsId = nowId;
             newslist.nowread_newsTitle = newsContent['newsTitle'];

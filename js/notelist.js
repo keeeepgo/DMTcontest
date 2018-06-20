@@ -1,4 +1,3 @@
-
 var nowread_newsId = 1;
 
 Vue.component('togglebutton', {
@@ -14,48 +13,48 @@ Vue.component('togglebutton', {
         prop: 'checked',
         event: 'change'
     },
-    data: function() {
+    data: function () {
         return {
             isactive: false
         }
     },
     methods: {
-        onToogle: function() {
+        onToogle: function () {
             this.$emit('clicked', this.isactive)
         }
     }
 });
 
-function toggleThisDate(thisDate){
+function toggleThisDate(thisDate) {
     var all_notelist_li = $.extend(true, {}, $("#notelist_ul").children("li"));
     var temp = $(thisDate).text();
-    all_notelist_li.each(function(){
-        if($(this).children(".noteDate_span").text() == temp){
+    all_notelist_li.each(function () {
+        if ($(this).children(".noteDate_span").text() == temp) {
             $(this).children("span").not(".notelist_DateTitle").slideToggle("slow");;
         }
     });
 }
 
-function appendDateLabel(){
+function appendDateLabel() {
     var all_noteDate_span = $("#notelist_ul").find(".noteDate_span");
-    var all_noteDate_span = $.extend(true, {}, $("#notelist_ul").find(".noteDate_span"));  
+    var all_noteDate_span = $.extend(true, {}, $("#notelist_ul").find(".noteDate_span"));
     var temp = all_noteDate_span["0"]["innerText"];
-    $(all_noteDate_span[0]).prev().before("<i class='material-icons' style='font-size: 3rem;color: #353441;width:10%;'>expand_more</i><span class='notelist_DateTitle' style='width:90%;cursor:pointer'>"+temp+"</span>");
-    all_noteDate_span.each(function(){
-        if($(this).text() != temp){
+    $(all_noteDate_span[0]).prev().before("<i class='material-icons' style='font-size: 3rem;color: #353441;width:10%;'>expand_more</i><span class='notelist_DateTitle' style='width:90%;cursor:pointer'>" + temp + "</span>");
+    all_noteDate_span.each(function () {
+        if ($(this).text() != temp) {
             temp = $(this).text();
-            $(this).prev().before("<i class='material-icons' style='font-size: 3rem;color: #353441;width:10%;'>expand_more</i><span class='notelist_DateTitle' style='width:90%;cursor:pointer'>"+temp+"</span>");
+            $(this).prev().before("<i class='material-icons' style='font-size: 3rem;color: #353441;width:10%;'>expand_more</i><span class='notelist_DateTitle' style='width:90%;cursor:pointer'>" + temp + "</span>");
         }
     });
-    
-    $(".notelist_DateTitle").click(function(){
+
+    $(".notelist_DateTitle").click(function () {
         console.log("dsada");
         toggleThisDate(this);
     });
 }
 
 var userId = 1;
-var url_NoteList = "http://localhost:8080/NoteList?userId="+userId;
+var url_NoteList = "http://localhost:8080/NoteList?userId=" + userId;
 var notelist = new Vue({
     el: '#notelist',
     data: {
@@ -63,48 +62,46 @@ var notelist = new Vue({
         sortByDate: false,
         dateTitleShow: false,
         todo: [],
-        nowread_noteId : ""
-        
+        nowread_noteId: ""
+
     },
     methods: {
-        markAsDoneOrUndone: function(item) {
+        markAsDoneOrUndone: function (item) {
             item.done = !item.done;
-            
+
         },
-        deleteItemFromList: function(item) {
+        deleteItemFromList: function (item) {
             let index = this.todo.indexOf(item)
             this.todo.splice(index, 1);
         },
-        changeReadNow: function(item) {
+        changeReadNow: function (item) {
             $("#note_content").html(marked(item.noteContent));
         },
-        movedonetoogle: function(active) {
+        movedonetoogle: function (active) {
             this.sortByStatus = active;
-            if(this.dateTitleShow == true && active==true){
+            if (this.dateTitleShow == true && active == true) {
                 console.log(this.dateTitleShow);
                 $("[name='dateTitleShow']").click();
             }
         },
-        moveDatetoogle: function(active) {
+        moveDatetoogle: function (active) {
             this.sortByDate = active;
-            console.log(active);
         },
-        dateTitleShowtoogle: function(active) {
+        dateTitleShowtoogle: function (active) {
             this.dateTitleShow = active;
-            if(active){
+            if (active) {
                 appendDateLabel();
-            }else{
-                $(".notelist_DateTitle").next("i").remove();
+            } else {
+                $(".notelist_DateTitle").prev("i").remove();
                 $(".notelist_DateTitle").remove();
             }
         },
-        refreshList: function(){
+        refreshList: function () {
             var xhr = new XMLHttpRequest();
             var url = url_NoteList;
-            console.log(url);
             xhr.open("GET", url, true);
             this_list = this;
-            xhr.onreadystatechange = function() {
+            xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
                     var str = "";
                     str = xhr.responseText;
@@ -116,10 +113,10 @@ var notelist = new Vue({
                         //console.log(element + ', index = ' + index);
                         element.done = false;
                         var noteDate = new Date(element.noteDate);
-                        element.noteDate =  noteDate.getFullYear() + '-' + (noteDate.getMonth() + 1) + '-' + noteDate.getDate();;
+                        element.noteDate = noteDate.getFullYear() + '-' + (noteDate.getMonth() + 1) + '-' + noteDate.getDate();;
 
                     });
-                    
+
                     this_list.todo = listdata;
                 }
             };
@@ -127,23 +124,28 @@ var notelist = new Vue({
         }
     },
     computed: {
-        todoByStatus: function() {
+        todoByStatus: function () {
             var sortedArray = [];
-            
+
             if (this.sortByStatus) {
-                var doneArray = this.todo.filter(function(item) { return item.done; });
-                var notDoneArray = this.todo.filter(function(item) { return !item.done; });
+                var doneArray = this.todo.filter(function (item) {
+                    return item.done;
+                });
+                var notDoneArray = this.todo.filter(function (item) {
+                    return !item.done;
+                });
                 sortedArray = [...notDoneArray, ...doneArray]; //将一个数组转为用逗号分隔的参数序列,取代concat()
             }
-            if(this.sortByDate){
-                if(sortedArray === []){
+            if (this.sortByDate) {
+                if (sortedArray.length == 0) {
                     sortedArray = this.todo;
+                    
                 }
-                sortedArray.sort((a,b)=>{
-                    return a.noteDate<b.noteDate;
+                sortedArray.sort((a, b) => {
+                    return a.noteDate < b.noteDate;
                 })
             }
-            if(!this.sortByStatus && !this.sortByDate){
+            if (!this.sortByStatus && !this.sortByDate) {
                 return this.todo;
             }
 

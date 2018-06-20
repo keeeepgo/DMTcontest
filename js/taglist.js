@@ -55,14 +55,10 @@ var taglist = new Vue({
             // this.tags.splice(index, 1);
             console.log(url_UserTagList);
             $.ajax({
-                options:{Origin: "my"},
                 //url: url_UserTagList+"?userId="+userId+"&tagId="+item.tagId,
                 url: url_UserTagList,
-                data: "&userId=1&tagId=haha",
+                data: "userId=1&tagId=1",
                 type: "DELETE",
-                xhrFields: {  
-                    withCredentials: true // 设置运行跨域操作  
-                  },  
                 success: function(){
                     this_list.refreshList();                  
                 },

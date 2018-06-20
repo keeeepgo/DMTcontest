@@ -34,7 +34,7 @@
         if (e.target.id == 'imgNoteShare' || e.target.id == 'imgNewsSearch') {
             return
         }
-        e = e || window.event;
+        //e = e || window.event;
         var txt = funGetSelectTxt(),
             sh = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0,
             left = (e.clientX - 40 < 0) ? e.clientX + 20 : e.clientX - 40,
@@ -62,7 +62,19 @@
         var txt = funGetSelectTxt(),
             title = $('title').html();
         if (txt) {
-            console.log(txt);
+            var userId = 1;
+            var url_NoteList = "http://localhost:8080/NoteList";
+            var today = new Date();
+            today_str = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDay();
+            console.log(today_str);
+            $.ajax({
+                url: url_NoteList,
+                type: "POST",
+                data: "userId="+userId+"&noteDate="+today_str+"&noteContent="+txt,
+                success: function(xhr){
+                    console.log(xhr);
+                }
+            });
         }
     });
     //点击搜索的操作 txt 为获取的文本
@@ -70,6 +82,17 @@
         var txt = funGetSelectTxt(),
             title = $('title').html();
         if (txt) {
-            console.log(txt); 
+            layui.use('layer', function(){ 
+                var layer = layui.layer;
+                layer.open({
+                    type: 2,
+                    title: false, //不显示标题
+                    shadeClose: true,
+                    shade: 0.001,
+                    offset: 'b',
+                    area: ['90%', '50%'],
+                    content: 'http://www.baike.com/wiki/'+txt //iframe的url
+                }); 
+            });
         }
     });
