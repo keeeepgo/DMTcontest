@@ -51,6 +51,7 @@
             top: 10px;
             background-color: white;
         }
+
     </style>
 </head>
 
@@ -94,9 +95,12 @@
                         <template v-if="todo.length">
                             <ul id="notelist_ul">
                                 <li stagger="5000" v-bind:class="item.done ? 'done' : ''" v-for="item in todoByStatus">
-                                    <span class="label" style="text-overflow:ellipsis;overflow:hidden;" v-bind:aria-label="item.done ? 'Undone' : 'Done'" v-bind:title="item.done ? 'Undone' : 'Done'"
+                                    <span class="label" style="display: -webkit-box;
+                                    -webkit-box-orient: vertical;
+                                    -webkit-line-clamp: 3;
+                                    overflow: hidden;" v-bind:aria-label="item.done ? 'Undone' : 'Done'" v-bind:title="item.done ? 'Undone' : 'Done'"
                                         v-on:click="markAsDoneOrUndone(item);changeReadNow(item)">{{item.noteContent}}</span>
-                                    <span class="noteDate_span" style="float: right;">{{item.noteDate}}</span>
+                                    <span class="noteDate_span" style="position: absolute;right: 2px;">{{item.noteDate}}</span>
                                 </li>
                             </ul>
                             <togglebutton label="移动已看文章" name="movedone" v-on:clicked="movedonetoogle"></togglebutton>
@@ -106,7 +110,7 @@
                         <p class="emptylist" v-else="">列表是空的。</p>
                     </div>
                 </div>
-                <div class="noteborder col-md-8 " style="padding-right:7rem">
+                <div class="noteborder col-md-8 " style="padding-right:7rem;margin-left: 15px;">
                     <div id="note_content" class="markdown-body">
                         笔记内容
                     </div>
