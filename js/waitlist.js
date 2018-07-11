@@ -53,7 +53,6 @@ var waitlist = new Vue({
         refreshList: function(){
             var xhr = new XMLHttpRequest();
             var url = url_WaitNewsList;
-            console.log(url);
             xhr.open("GET", url, true);
             this_list = this;
             xhr.onreadystatechange = function() {

@@ -354,35 +354,35 @@
 
 		//收入待看文章列表
 		var userId = 1;
-		var url_WaitNewsList = "http://localhost:8080/WaitNewsList";
-		$("#add_waitnews_span").click(function () {
-			$.ajax({
-				url: url_WaitNewsList,
-				type: "POST",
-				data: "userId=" + userId + "&newsId=" + nowread_newsId,
-				success: function () {
-					$("#add_waitnews_span").animate(
-						{
-							left:'+=250px'
-						},
-						'slow',function(){$("#add_waitnews_span").hide();}
-					);
-					$("#add_waitnews_span").animate(
-						{
-							left:'-=250px'
-						}
-					);
-					waitlist.refreshList();
-					
-				},
-				error: function (xhr, str) {
-					console.log(xhr);
-					console.log(str);
-				}
+		var url_AddWaitNewsList = "http://localhost:8080/WaitNewsList";
+		$(function(){
+			$("#add_waitnews_span").click(function () {
+				$.ajax({
+					url: url_AddWaitNewsList,
+					type: "POST",
+					data: "userId=" + userId + "&newsId=" + nowread_newsId,
+					success: function () {
+						$("#add_waitnews_span").animate(
+							{
+								left:'+=250px'
+							},
+							'slow',function(){$("#add_waitnews_span").hide();}
+						);
+						$("#add_waitnews_span").animate(
+							{
+								left:'-=250px'
+							}
+						);
+						waitlist.refreshList();
+					},
+					error: function (xhr, str) {
+						console.log(xhr);
+						console.log(str);
+					}
+				});
 			});
-
 		});
-	</script>
+		</script>
 </body>
 
 </html>

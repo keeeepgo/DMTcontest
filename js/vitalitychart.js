@@ -11,7 +11,7 @@ function getVitalityChartData() {
             var format_getdata = [];
             var getdata = JSON.parse(str);
             for(i=0;i<getdata.length;i++){
-                format_getdata[i] = [getdata[i]["date"],getdata[i]["newsNumber"]];
+                format_getdata[i] = [getdata[i]["date"],getdata[i]["newsAmount"]];
             }
             var option = {series:{data:format_getdata}}
             myChart.setOption(option);
